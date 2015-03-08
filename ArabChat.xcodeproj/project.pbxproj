@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E80B39331AAC1589005E7C01 /* LoginScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39321AAC1589005E7C01 /* LoginScreenViewController.m */; };
 		E8A414F01AAAAE090022E8CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414EF1AAAAE090022E8CC /* main.m */; };
 		E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F21AAAAE090022E8CC /* AppDelegate.m */; };
 		E8A414F61AAAAE090022E8CC /* ArabChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F41AAAAE090022E8CC /* ArabChat.xcdatamodeld */; };
@@ -15,6 +16,7 @@
 		E8A414FE1AAAAE090022E8CC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8A414FD1AAAAE090022E8CC /* Images.xcassets */; };
 		E8A415011AAAAE090022E8CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A414FF1AAAAE090022E8CC /* LaunchScreen.xib */; };
 		E8A4150D1AAAAE090022E8CC /* ArabChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A4150C1AAAAE090022E8CC /* ArabChatTests.m */; };
+		E8A415B91AAAB1340022E8CC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A415B81AAAB1340022E8CC /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E80B39311AAC1589005E7C01 /* LoginScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginScreenViewController.h; sourceTree = "<group>"; };
+		E80B39321AAC1589005E7C01 /* LoginScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginScreenViewController.m; sourceTree = "<group>"; };
 		E8A414EA1AAAAE090022E8CC /* ArabChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArabChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A414EE1AAAAE090022E8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8A414EF1AAAAE090022E8CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,6 +46,7 @@
 		E8A415061AAAAE090022E8CC /* ArabChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArabChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A4150B1AAAAE090022E8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8A4150C1AAAAE090022E8CC /* ArabChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArabChatTests.m; sourceTree = "<group>"; };
+		E8A415B81AAAB1340022E8CC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A415B91AAAB1340022E8CC /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,12 +68,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E80B39301AAC1571005E7C01 /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				E80B39311AAC1589005E7C01 /* LoginScreenViewController.h */,
+				E80B39321AAC1589005E7C01 /* LoginScreenViewController.m */,
+			);
+			name = LoginScreen;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		E8A414E11AAAAE090022E8CC = {
 			isa = PBXGroup;
 			children = (
 				E8A414EC1AAAAE090022E8CC /* ArabChat */,
 				E8A415091AAAAE090022E8CC /* ArabChatTests */,
 				E8A414EB1AAAAE090022E8CC /* Products */,
+				E8A415B81AAAB1340022E8CC /* AudioToolbox.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,6 +100,7 @@
 		E8A414EC1AAAAE090022E8CC /* ArabChat */ = {
 			isa = PBXGroup;
 			children = (
+				E80B39301AAC1571005E7C01 /* LoginScreen */,
 				E8A414F11AAAAE090022E8CC /* AppDelegate.h */,
 				E8A414F21AAAAE090022E8CC /* AppDelegate.m */,
 				E8A414F71AAAAE090022E8CC /* ViewController.h */,
@@ -185,6 +203,19 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				es,
+				fr,
+				he,
+				it,
+				nl,
+				pl,
+				pt,
+				ro,
+				ru,
+				tr,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = E8A414E11AAAAE090022E8CC;
 			productRefGroup = E8A414EB1AAAAE090022E8CC /* Products */;
@@ -226,6 +257,7 @@
 				E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */,
 				E8A414F91AAAAE090022E8CC /* ViewController.m in Sources */,
 				E8A414F01AAAAE090022E8CC /* main.m in Sources */,
+				E80B39331AAC1589005E7C01 /* LoginScreenViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +379,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ArabChat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -357,6 +390,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ArabChat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -416,6 +450,7 @@
 				E8A415121AAAAE090022E8CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E8A415131AAAAE090022E8CC /* Build configuration list for PBXNativeTarget "ArabChatTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +459,7 @@
 				E8A415151AAAAE090022E8CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
