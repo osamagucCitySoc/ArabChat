@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
 
 @end
 
@@ -26,16 +27,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self initUI];
 }
 
 
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [[self view] endEditing:YES];
+
+-(void)initUI
+{
+    if([[NSUserDefaults standardUserDefaults]boolForKey:@"rememberME"])
+    {
+        NSDictionary* userDict = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"];
+        [self.userNameTextField setText:[userDict objectForKey:@"username"]];
+        [self.passwordTextField setText:[userDict objectForKey:@"password"]];
+        [self.rememberMeSwitch setSelected:YES];
+    }else
+    {
+        [self.userNameTextField setText:@""];
+        [self.passwordTextField setText:@""];
+        [self.rememberMeSwitch setSelected:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+
+#pragma mark action outlets
+- (IBAction)rememberMeSwitchValueChanged:(id)sender {
+    
 }
 
 - (IBAction)loginClicked:(id)sender {
@@ -120,8 +140,10 @@
             [self.view makeToast:[[responseDict objectForKey:@"result"] objectForKey:@"message"] duration:5.0 position:@"bottom"];
         }else
         {
+            
             NSDictionary* userDict = [[responseDict objectForKey:@"result"] objectForKey:@"user"];
             [[NSUserDefaults standardUserDefaults]setObject:userDict forKey:@"currentUser"];
+            [[NSUserDefaults standardUserDefaults]setBool:self.rememberMeSwitch.isSelected forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
         }
     }
@@ -158,4 +180,9 @@
         self.view.frame = f;
     }];
 }
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [[self view] endEditing:YES];
+}
+
 @end
