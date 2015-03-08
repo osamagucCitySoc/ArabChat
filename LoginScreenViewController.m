@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *onlineUsersLabel;
 
 @end
 
@@ -23,6 +24,7 @@
 {
     MZLoadingCircle *loadingCircle;
     NSURLConnection* loginConnection;
+    NSURLConnection* onlineCountConnection;
 }
 
 - (void)viewDidLoad {
@@ -45,6 +47,30 @@
         [self.userNameTextField setText:@""];
         [self.passwordTextField setText:@""];
         [self.rememberMeSwitch setSelected:NO];
+    }
+    
+    
+    if([ Reachability isConnected])
+    {
+        [self showLoadingMode];
+        NSString *post = @"";
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];
+        
+        NSURL *url = [NSURL URLWithString:@"http://moh2013.com/arabDevs/arabchat/onlineCount.php"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:90.0];
+        [request setHTTPMethod:@"POST"];
+        
+        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        
+        [request setHTTPBody:postData];
+        
+        onlineCountConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self    startImmediately:NO];
+        
+        [onlineCountConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
+                                   forMode:NSDefaultRunLoopMode];
+        [onlineCountConnection start];
+        
     }
 }
 
@@ -143,9 +169,17 @@
             
             NSDictionary* userDict = [[responseDict objectForKey:@"result"] objectForKey:@"user"];
             [[NSUserDefaults standardUserDefaults]setObject:userDict forKey:@"currentUser"];
-            [[NSUserDefaults standardUserDefaults]setBool:self.rememberMeSwitch.isSelected forKey:@"rememberME"];
+            [[NSUserDefaults standardUserDefaults]setBool:self.rememberMeSwitch.isOn forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
+            [self performSegueWithIdentifier:@"homeSeg" sender:self];
         }
+    }else if(connection == onlineCountConnection)
+    {
+        [self hideLoadingMode];
+        NSError* error;
+        NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        [self.onlineUsersLabel setText:[NSString stringWithFormat:@"%@%@%@",@"إدخل الآن ! ",[[responseDict objectForKey:@"result"] objectForKey:@"online"],@" مستخدم أونلاين"]];
+        [self.onlineUsersLabel setNeedsDisplay];
     }
 }
 
