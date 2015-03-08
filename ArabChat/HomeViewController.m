@@ -12,7 +12,7 @@
 #import "UIView+Toast.h"
 #import "NZCircularImageView.h"
 
-@interface HomeViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate>
+@interface HomeViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
@@ -34,6 +34,7 @@
     NSURLConnection* getCountriesCitiesConnection;
     NSMutableData* responseData;
     NSDictionary* countriesCitiesDataSource;
+    UIImagePickerController *imagePicker;
 }
 
 - (void)viewDidLoad {
@@ -113,6 +114,23 @@
 }
 
 - (IBAction)addProfileImageClicked:(id)sender {
+    
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الصورة" delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:@"الكاميرا",@"معرض الصور", nil];
+    [sheet setTag:1];
+    
+    [sheet showInView:self.view];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker  didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    UIImage *originalImage=[info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    //Do whatever with your image
+    NSData *dataImage = UIImageJPEGRepresentation (originalImage,0.1);
+    UIImage *image=[UIImage imageWithData:dataImage];
+    
+    [self.profilePicture setImage:image];
 }
 
 #pragma mark picker view delegate
@@ -237,6 +255,32 @@
     if(connection == getCountriesCitiesConnection)
     {
         [responseData appendData:data];
+    }
+}
+
+
+#pragma mark action sheet delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag == 1)
+    {
+        if(buttonIndex == 0)
+        {
+            imagePicker=[[UIImagePickerController alloc]init];
+            imagePicker.sourceType=UIImagePickerControllerSourceTypeCamera;
+            imagePicker.showsCameraControls=YES;
+            imagePicker.allowsEditing=YES;
+            imagePicker.delegate=self;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }else if(buttonIndex == 1)
+        {
+            imagePicker=[[UIImagePickerController alloc]init];
+            imagePicker.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePicker.allowsEditing=YES;
+            imagePicker.delegate=self;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
     }
 }
 
