@@ -7,11 +7,11 @@
 //
 
 #import "LoginScreenViewController.h"
-#import "MBProgressHUD.h"
+#import "MZLoadingCircle.h"
 #import "Reachability.h"
 #import "UIView+Toast.h"
 
-@interface LoginScreenViewController ()<MBProgressHUDDelegate>
+@interface LoginScreenViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -20,7 +20,7 @@
 
 @implementation LoginScreenViewController
 {
-    MBProgressHUD *HUD;
+    MZLoadingCircle *loadingCircle;
 }
 
 - (void)viewDidLoad {
@@ -33,27 +33,46 @@
 }
 
 - (IBAction)loginClicked:(id)sender {
-    
+    if(![ Reachability isConnected])
+    {
+        [self.view makeToast:@"عذراً. يجب أن تكون متصلاً بالإنترنت" duration:5.0 position:@"bottom"];
+    }else
+    {
+        [self showLoadingMode];
+    }
 }
 
 
 
 #pragma mark-
 #pragma mark-MDProgress HUD
--(void)launchHUD{
-    HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:HUD];
-    //    HUD.dimBackground = YES;
-    
-    HUD.delegate = self;
-    HUD.labelText = @"Loading";
-    
+-(void)showLoadingMode {
+    if (!loadingCircle) {
+        loadingCircle = [[MZLoadingCircle alloc]initWithNibName:nil bundle:nil];
+        loadingCircle.view.backgroundColor = [UIColor clearColor];
+        
+        //Colors for layers
+        loadingCircle.colorCustomLayer = [UIColor colorWithRed:1 green:0.4 blue:0 alpha:1];
+        loadingCircle.colorCustomLayer2 = [UIColor colorWithRed:0 green:0.4 blue:1 alpha:0.65];
+        loadingCircle.colorCustomLayer3 = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:0.4];
+        
+        int size = 100;
+        
+        CGRect frame = loadingCircle.view.frame;
+        frame.size.width = size ;
+        frame.size.height = size;
+        frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+        frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
+        loadingCircle.view.frame = frame;
+        loadingCircle.view.layer.zPosition = MAXFLOAT;
+        [self.view addSubview: loadingCircle.view];
+    }
 }
-- (void)hideLoader {
-    // Do something usefull in here instead of sleeping ...
-    [HUD hide:YES afterDelay:1.5];
-}
-- (void)showLoader{
-    [HUD show:YES];
+
+-(void)hideLoadingMode {
+    if (loadingCircle) {
+        [loadingCircle.view removeFromSuperview];
+        loadingCircle = nil;
+    }
 }
 @end

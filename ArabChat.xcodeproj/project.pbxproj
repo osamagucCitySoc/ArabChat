@@ -12,6 +12,8 @@
 		E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39391AAC20F6005E7C01 /* Reachability.m */; };
 		E80B393F1AAC2153005E7C01 /* OLGhostAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B393C1AAC2153005E7C01 /* OLGhostAlertView.m */; };
 		E80B39401AAC2153005E7C01 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B393E1AAC2153005E7C01 /* UIView+Toast.m */; };
+		E80B39421AAC220B005E7C01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E80B39411AAC220B005E7C01 /* QuartzCore.framework */; };
+		E80B39551AAC24E1005E7C01 /* MZLoadingCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39541AAC24E1005E7C01 /* MZLoadingCircle.m */; };
 		E8A414F01AAAAE090022E8CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414EF1AAAAE090022E8CC /* main.m */; };
 		E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F21AAAAE090022E8CC /* AppDelegate.m */; };
 		E8A414F61AAAAE090022E8CC /* ArabChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F41AAAAE090022E8CC /* ArabChat.xcdatamodeld */; };
@@ -44,6 +46,9 @@
 		E80B393C1AAC2153005E7C01 /* OLGhostAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLGhostAlertView.m; sourceTree = "<group>"; };
 		E80B393D1AAC2153005E7C01 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		E80B393E1AAC2153005E7C01 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
+		E80B39411AAC220B005E7C01 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E80B39531AAC24E1005E7C01 /* MZLoadingCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZLoadingCircle.h; sourceTree = "<group>"; };
+		E80B39541AAC24E1005E7C01 /* MZLoadingCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZLoadingCircle.m; sourceTree = "<group>"; };
 		E8A414EA1AAAAE090022E8CC /* ArabChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArabChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A414EE1AAAAE090022E8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8A414EF1AAAAE090022E8CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -66,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E80B39421AAC220B005E7C01 /* QuartzCore.framework in Frameworks */,
 				E8A415B91AAAB1340022E8CC /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +99,8 @@
 		E80B39371AAC2073005E7C01 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				E80B39531AAC24E1005E7C01 /* MZLoadingCircle.h */,
+				E80B39541AAC24E1005E7C01 /* MZLoadingCircle.m */,
 				E80B393B1AAC2153005E7C01 /* OLGhostAlertView.h */,
 				E80B393C1AAC2153005E7C01 /* OLGhostAlertView.m */,
 				E80B393D1AAC2153005E7C01 /* UIView+Toast.h */,
@@ -111,6 +119,7 @@
 				E8A414EC1AAAAE090022E8CC /* ArabChat */,
 				E8A415091AAAAE090022E8CC /* ArabChatTests */,
 				E8A414EB1AAAAE090022E8CC /* Products */,
+				E80B39411AAC220B005E7C01 /* QuartzCore.framework */,
 				E8A415B81AAAB1340022E8CC /* AudioToolbox.framework */,
 			);
 			sourceTree = "<group>";
@@ -282,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E80B39401AAC2153005E7C01 /* UIView+Toast.m in Sources */,
+				E80B39551AAC24E1005E7C01 /* MZLoadingCircle.m in Sources */,
 				E80B393F1AAC2153005E7C01 /* OLGhostAlertView.m in Sources */,
 				E8A414F61AAAAE090022E8CC /* ArabChat.xcdatamodeld in Sources */,
 				E80B39361AAC2070005E7C01 /* MBProgressHUD.m in Sources */,

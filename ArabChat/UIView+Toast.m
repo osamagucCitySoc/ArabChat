@@ -366,7 +366,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         messageLabel.text = message;
         
         // size the message label according to the length of the text
-        CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * CSToastMaxWidth) - imageWidth, self.bounds.size.height * CSToastMaxHeight);
+        //CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * CSToastMaxWidth) - imageWidth, self.bounds.size.height * CSToastMaxHeight);
 //        CGSize expectedSizeMessage = [self sizeForString:message font:messageLabel.font constrainedToSize:maxSizeMessage lineBreakMode:messageLabel.lineBreakMode];
         messageLabel.frame = CGRectMake(0.0, 0.0, 240, 40);
     }
@@ -396,8 +396,8 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     }
     
 
-    CGFloat longerWidth = MAX(titleWidth, messageWidth);
-    CGFloat longerLeft = MAX(titleLeft, messageLeft);
+   // CGFloat longerWidth = MAX(titleWidth, messageWidth);
+    //CGFloat longerLeft = MAX(titleLeft, messageLeft);
     
     // wrapper width uses the longerWidth or the image width, whatever is larger. same logic applies to the wrapper height
 //    CGFloat wrapperWidth = MAX((imageWidth + (CSToastHorizontalPadding * 2)), (longerLeft + longerWidth + CSToastHorizontalPadding));    
