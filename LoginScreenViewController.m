@@ -7,14 +7,19 @@
 //
 
 #import "LoginScreenViewController.h"
+#import "MBProgressHUD.h"
 
-@interface LoginScreenViewController ()
+@interface LoginScreenViewController ()<MBProgressHUDDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end
 
 @implementation LoginScreenViewController
+{
+    MBProgressHUD *HUD;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,5 +32,26 @@
 
 - (IBAction)loginClicked:(id)sender {
     
+}
+
+
+
+#pragma mark-
+#pragma mark-MDProgress HUD
+-(void)launchHUD{
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    //    HUD.dimBackground = YES;
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Loading";
+    
+}
+- (void)hideLoader {
+    // Do something usefull in here instead of sleeping ...
+    [HUD hide:YES afterDelay:1.5];
+}
+- (void)showLoader{
+    [HUD show:YES];
 }
 @end

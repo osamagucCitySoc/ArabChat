@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E80B39331AAC1589005E7C01 /* LoginScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39321AAC1589005E7C01 /* LoginScreenViewController.m */; };
 		E80B39361AAC2070005E7C01 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39351AAC2070005E7C01 /* MBProgressHUD.m */; };
+		E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39391AAC20F6005E7C01 /* Reachability.m */; };
 		E8A414F01AAAAE090022E8CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414EF1AAAAE090022E8CC /* main.m */; };
 		E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F21AAAAE090022E8CC /* AppDelegate.m */; };
 		E8A414F61AAAAE090022E8CC /* ArabChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F41AAAAE090022E8CC /* ArabChat.xcdatamodeld */; };
@@ -35,6 +36,8 @@
 		E80B39321AAC1589005E7C01 /* LoginScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginScreenViewController.m; sourceTree = "<group>"; };
 		E80B39341AAC2070005E7C01 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		E80B39351AAC2070005E7C01 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		E80B39381AAC20F6005E7C01 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		E80B39391AAC20F6005E7C01 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		E8A414EA1AAAAE090022E8CC /* ArabChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArabChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A414EE1AAAAE090022E8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8A414EF1AAAAE090022E8CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -84,6 +87,8 @@
 		E80B39371AAC2073005E7C01 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				E80B39381AAC20F6005E7C01 /* Reachability.h */,
+				E80B39391AAC20F6005E7C01 /* Reachability.m */,
 				E80B39341AAC2070005E7C01 /* MBProgressHUD.h */,
 				E80B39351AAC2070005E7C01 /* MBProgressHUD.m */,
 			);
@@ -269,6 +274,7 @@
 				E8A414F61AAAAE090022E8CC /* ArabChat.xcdatamodeld in Sources */,
 				E80B39361AAC2070005E7C01 /* MBProgressHUD.m in Sources */,
 				E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */,
+				E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */,
 				E8A414F91AAAAE090022E8CC /* ViewController.m in Sources */,
 				E8A414F01AAAAE090022E8CC /* main.m in Sources */,
 				E80B39331AAC1589005E7C01 /* LoginScreenViewController.m in Sources */,
