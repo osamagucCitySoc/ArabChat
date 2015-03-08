@@ -32,6 +32,8 @@
 {
     MZLoadingCircle *loadingCircle;
     NSURLConnection* getCountriesCitiesConnection;
+    NSURLConnection* registerConnection;
+    NSURLConnection* uploadImageForUserConnection;
     NSMutableData* responseData;
     NSDictionary* countriesCitiesDataSource;
     UIImagePickerController *imagePicker;
@@ -77,7 +79,7 @@
         getCountriesCitiesConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self    startImmediately:NO];
         
         [getCountriesCitiesConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
-                                         forMode:NSDefaultRunLoopMode];
+                                                forMode:NSDefaultRunLoopMode];
         [getCountriesCitiesConnection start];
         
     }
@@ -113,9 +115,60 @@
     }
 }
 
+- (IBAction)registerButtonClicked:(id)sender {
+    
+    [[self view] endEditing:YES];
+    [[self scrollView] endEditing:YES];
+    
+    if(![ Reachability isConnected])
+    {
+        [self.view makeToast:@"عذراً. يجب أن تكون متصلاً بالإنترنت" duration:5.0 position:@"bottom"];
+    }else if(self.usernameTextField.text.length < 1 || self.passwordTextField.text.length < 1 || self.passwordTwoTextField.text.length < 1 || self.statusMessageTextField.text.length < 1)
+    {
+        [self.view makeToast:@"عذراً. كل البيانات مطلوبة" duration:5.0 position:@"bottom"];
+    }else if(![self.passwordTextField.text isEqualToString:self.passwordTwoTextField.text])
+    {
+        [self.view makeToast:@"عذراً. كلمات السر غير متطابقة" duration:5.0 position:@"bottom"];
+    }else
+    {
+        [self showLoadingMode];
+        int gender = 1;
+        if(self.boySwitch.isOn)
+        {
+            gender = 1;
+        }else
+        {
+            gender = 2;
+        }
+        
+        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&status=%@&gender=%i&birthday=%f",self.usernameTextField.text,self.passwordTwoTextField.text,self.statusMessageTextField.text,gender,[[self.datePicker date] timeIntervalSince1970]];
+        
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];
+        
+        NSURL *url = [NSURL URLWithString:@"http://moh2013.com/arabDevs/arabchat/newUser.php"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:90.0];
+        [request setHTTPMethod:@"POST"];
+        
+        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        
+        [request setHTTPBody:postData];
+        
+        responseData = [[NSMutableData alloc]init];
+        
+        registerConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self    startImmediately:NO];
+        
+        [registerConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
+                                                forMode:NSDefaultRunLoopMode];
+        [registerConnection start];
+
+    }
+}
+
+
 - (IBAction)addProfileImageClicked:(id)sender {
     
-    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الصورة" delegate:self cancelButtonTitle:@"" destructiveButtonTitle:nil otherButtonTitles:@"الكاميرا",@"معرض الصور", nil];
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الصورة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكاميرا",@"معرض الصور", nil];
     [sheet setTag:1];
     
     [sheet showInView:self.view];
@@ -154,7 +207,7 @@
                 NSArray* sortedArray = [[countriesCitiesDataSource allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                     return [(NSString *)obj1 compare:(NSString *)obj2 options:NSNumericSearch];
                 }];
-                 return [[countriesCitiesDataSource objectForKey:[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]]] count];
+                return [[countriesCitiesDataSource objectForKey:[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]]] count];
             }
             @catch (NSException *exception) {
                 return 0;
@@ -255,9 +308,57 @@
     if(connection == getCountriesCitiesConnection)
     {
         [responseData appendData:data];
+    }else if(connection == registerConnection)
+    {
+        [self hideLoadingMode];
+        NSLog(@"%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+        NSError* error;
+        NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        if([[responseDict objectForKey:@"result"] objectForKey:@"error"])
+        {
+            [self.view makeToast:[[responseDict objectForKey:@"result"] objectForKey:@"message"] duration:5.0 position:@"bottom"];
+        }else
+        {
+            NSData *dataImage = UIImageJPEGRepresentation (self.profilePicture.image,0.1);
+            [self uploadImage:dataImage userID:[[[responseDict objectForKey:@"result"] objectForKey:@"user"] objectForKey:@"userID"]];
+        }
     }
 }
 
+
+-(void)uploadImage:(NSData*)imageData userID:(NSString*)userID{
+    
+    [self showLoadingMode];
+    NSString *urlString = @"http://moh2013.com/arabDevs/arabchat/uploadImageForUser.php";
+    NSString* username = [NSString stringWithFormat:@"%@",userID];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:urlString]];
+    [request setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"---------------------------14737809831466499882746641449";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"%@.png\"\r\n",username] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[NSData dataWithData:imageData]];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:body];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSData *printData=[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        NSLog(@"%@",[[NSString alloc] initWithData:printData encoding:NSUTF8StringEncoding]);
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self hideLoadingMode];
+            [self hideLoadingMode];
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    });
+}
 
 #pragma mark action sheet delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -293,7 +394,7 @@
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
-   [[self scrollView] endEditing:YES];
+    [[self scrollView] endEditing:YES];
     [[self view] endEditing:YES];
 }
 

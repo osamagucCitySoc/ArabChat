@@ -864,6 +864,9 @@
                                                 <exclude reference="iM0-D2-64t"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="registerButtonClicked:" destination="Qe9-8v-Aon" eventType="touchUpInside" id="lgu-t0-4EU"/>
+                                        </connections>
                                     </button>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="cJ8-fN-u2l">
                                         <rect key="frame" x="-160" y="-81" width="320" height="162"/>
