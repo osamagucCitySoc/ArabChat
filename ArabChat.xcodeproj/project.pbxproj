@@ -33,6 +33,9 @@
 		E80B398E1AAC446D005E7C01 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B397C1AAC446D005E7C01 /* UIImageView+HighlightedWebCache.m */; };
 		E80B398F1AAC446D005E7C01 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B397E1AAC446D005E7C01 /* UIImageView+WebCache.m */; };
 		E80B39901AAC446D005E7C01 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39801AAC446D005E7C01 /* UIView+WebCacheOperation.m */; };
+		E85074221AAC6420007ACEEC /* add_new_user.png in Resources */ = {isa = PBXBuildFile; fileRef = E85074201AAC6420007ACEEC /* add_new_user.png */; };
+		E85074231AAC6420007ACEEC /* add_new_user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E85074211AAC6420007ACEEC /* add_new_user@2x.png */; };
+		E85074251AAC642F007ACEEC /* add_new_user@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E85074241AAC642F007ACEEC /* add_new_user@3x.png */; };
 		E8A414F01AAAAE090022E8CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414EF1AAAAE090022E8CC /* main.m */; };
 		E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F21AAAAE090022E8CC /* AppDelegate.m */; };
 		E8A414F61AAAAE090022E8CC /* ArabChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8A414F41AAAAE090022E8CC /* ArabChat.xcdatamodeld */; };
@@ -107,6 +110,9 @@
 		E80B397E1AAC446D005E7C01 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		E80B397F1AAC446D005E7C01 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		E80B39801AAC446D005E7C01 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		E85074201AAC6420007ACEEC /* add_new_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_new_user.png; sourceTree = "<group>"; };
+		E85074211AAC6420007ACEEC /* add_new_user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_new_user@2x.png"; sourceTree = "<group>"; };
+		E85074241AAC642F007ACEEC /* add_new_user@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_new_user@3x.png"; sourceTree = "<group>"; };
 		E8A414EA1AAAAE090022E8CC /* ArabChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArabChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A414EE1AAAAE090022E8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8A414EF1AAAAE090022E8CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -267,6 +273,9 @@
 		E8A414ED1AAAAE090022E8CC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E85074201AAC6420007ACEEC /* add_new_user.png */,
+				E85074211AAC6420007ACEEC /* add_new_user@2x.png */,
+				E85074241AAC642F007ACEEC /* add_new_user@3x.png */,
 				E8A414EE1AAAAE090022E8CC /* Info.plist */,
 				E8A414EF1AAAAE090022E8CC /* main.m */,
 			);
@@ -384,8 +393,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8A414FC1AAAAE090022E8CC /* Main.storyboard in Resources */,
+				E85074251AAC642F007ACEEC /* add_new_user@3x.png in Resources */,
 				E8A415011AAAAE090022E8CC /* LaunchScreen.xib in Resources */,
 				E8A414FE1AAAAE090022E8CC /* Images.xcassets in Resources */,
+				E85074221AAC6420007ACEEC /* add_new_user.png in Resources */,
+				E85074231AAC6420007ACEEC /* add_new_user@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

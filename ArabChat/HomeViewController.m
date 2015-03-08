@@ -10,6 +10,7 @@
 #import "MZLoadingCircle.h"
 #import "Reachability.h"
 #import "UIView+Toast.h"
+#import "NZCircularImageView.h"
 
 @interface HomeViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate>
 
@@ -23,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTwoTextField;
 @property (weak, nonatomic) IBOutlet UITextField *statusMessageTextField;
+@property (weak, nonatomic) IBOutlet NZCircularImageView *profilePicture;
+
 @end
 
 @implementation HomeViewController
@@ -48,6 +51,10 @@
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
     [self.scrollView addGestureRecognizer:singleTap];
+    
+    
+    
+    [self.profilePicture setImage:[UIImage imageNamed:@"add_new_user.png"]];
     
     if([ Reachability isConnected])
     {
@@ -105,6 +112,8 @@
     }
 }
 
+- (IBAction)addProfileImageClicked:(id)sender {
+}
 
 #pragma mark picker view delegate
 // returns the number of 'columns' to display.
