@@ -177,7 +177,7 @@
     [(UILabel*)[cell viewWithTag:3] setText:[NSString stringWithFormat:@"%@ : %@",@"الجنس",gender]];
     [(UILabel*)[cell viewWithTag:4] setText:[NSString stringWithFormat:@"%@ : %@ - %@",@"العنوان",[cellUser objectForKey:@"userCountry"],[cellUser objectForKey:@"userCity"]]];
     [(UILabel*)[cell viewWithTag:7] setText:[NSString stringWithFormat:@"%@ : %@",@"الوصف",[cellUser objectForKey:@"status"]]];
-    [(NZCircularImageView*)[cell viewWithTag:5] setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[cellUser objectForKey:@"profilePic"]]] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [(NZCircularImageView*)[cell viewWithTag:5] setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[cellUser objectForKey:@"profilePic"]]] placeholderImage:[UIImage imageNamed:@"loading.png"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     return cell;
 }

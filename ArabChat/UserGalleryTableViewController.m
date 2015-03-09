@@ -105,7 +105,7 @@
 
     NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[[dataSource objectAtIndex:indexPath.row] objectForKey:@"photo"]]];
     
-    [(NZCircularImageView*) [cell viewWithTag:1] setImageWithURL:url usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [(NZCircularImageView*) [cell viewWithTag:1] setImageWithURL:url placeholderImage:[UIImage imageNamed:@"loading.png"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
    
     return cell;
 }
