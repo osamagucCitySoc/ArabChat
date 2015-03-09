@@ -14,7 +14,7 @@
 		E80B39401AAC2153005E7C01 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B393E1AAC2153005E7C01 /* UIView+Toast.m */; };
 		E80B39421AAC220B005E7C01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E80B39411AAC220B005E7C01 /* QuartzCore.framework */; };
 		E80B39551AAC24E1005E7C01 /* MZLoadingCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39541AAC24E1005E7C01 /* MZLoadingCircle.m */; };
-		E80B39581AAC3E77005E7C01 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39571AAC3E77005E7C01 /* HomeViewController.m */; };
+		E80B39581AAC3E77005E7C01 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39571AAC3E77005E7C01 /* RegisterViewController.m */; };
 		E80B395C1AAC4438005E7C01 /* NZCircularImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B395B1AAC4438005E7C01 /* NZCircularImageView.m */; };
 		E80B395F1AAC4451005E7C01 /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B395E1AAC4451005E7C01 /* UIImageView+UIActivityIndicatorForSDWebImage.m */; };
 		E80B39811AAC446D005E7C01 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39611AAC446D005E7C01 /* MKAnnotationView+WebCache.m */; };
@@ -71,8 +71,8 @@
 		E80B39411AAC220B005E7C01 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E80B39531AAC24E1005E7C01 /* MZLoadingCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZLoadingCircle.h; sourceTree = "<group>"; };
 		E80B39541AAC24E1005E7C01 /* MZLoadingCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZLoadingCircle.m; sourceTree = "<group>"; };
-		E80B39561AAC3E77005E7C01 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		E80B39571AAC3E77005E7C01 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		E80B39561AAC3E77005E7C01 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		E80B39571AAC3E77005E7C01 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		E80B395A1AAC4438005E7C01 /* NZCircularImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NZCircularImageView.h; sourceTree = "<group>"; };
 		E80B395B1AAC4438005E7C01 /* NZCircularImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NZCircularImageView.m; sourceTree = "<group>"; };
 		E80B395D1AAC4451005E7C01 /* UIImageView+UIActivityIndicatorForSDWebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+UIActivityIndicatorForSDWebImage.h"; sourceTree = "<group>"; };
@@ -181,8 +181,8 @@
 		E80B39591AAC3E7E005E7C01 /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E80B39561AAC3E77005E7C01 /* HomeViewController.h */,
-				E80B39571AAC3E77005E7C01 /* HomeViewController.m */,
+				E80B39561AAC3E77005E7C01 /* RegisterViewController.h */,
+				E80B39571AAC3E77005E7C01 /* RegisterViewController.m */,
 			);
 			name = HomeViewController;
 			sourceTree = "<group>";
@@ -425,7 +425,7 @@
 				E80B39871AAC446D005E7C01 /* SDWebImageDownloaderOperation.m in Sources */,
 				E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */,
 				E80B39831AAC446D005E7C01 /* SDImageCache.m in Sources */,
-				E80B39581AAC3E77005E7C01 /* HomeViewController.m in Sources */,
+				E80B39581AAC3E77005E7C01 /* RegisterViewController.m in Sources */,
 				E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */,
 				E8A414F91AAAAE090022E8CC /* ViewController.m in Sources */,
 				E80B39841AAC446D005E7C01 /* SDWebImageCompat.m in Sources */,
