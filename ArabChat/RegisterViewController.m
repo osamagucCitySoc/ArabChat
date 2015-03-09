@@ -141,7 +141,13 @@
             gender = 2;
         }
         
-        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&status=%@&gender=%i&birthday=%f",self.usernameTextField.text,self.passwordTwoTextField.text,self.statusMessageTextField.text,gender,[[self.datePicker date] timeIntervalSince1970]];
+        NSArray* sortedArray = [[countriesCitiesDataSource allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [(NSString *)obj1 compare:(NSString *)obj2 options:NSNumericSearch];
+        }];
+        
+        
+        
+        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&status=%@&gender=%i&birthday=%f&country=%@&city=%@",self.usernameTextField.text,self.passwordTwoTextField.text,self.statusMessageTextField.text,gender,[[self.datePicker date] timeIntervalSince1970],[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]],[[countriesCitiesDataSource objectForKey:[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]]] objectAtIndex:[self.countryCityPickerView selectedRowInComponent:1]]];
         
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];
@@ -312,7 +318,7 @@
         NSLog(@"%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
         NSError* error;
         NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        if([[responseDict objectForKey:@"result"] objectForKey:@"error"])
+        if([[[responseDict objectForKey:@"result"] objectForKey:@"error"] intValue] != 0)
         {
             [self.view makeToast:[[responseDict objectForKey:@"result"] objectForKey:@"message"] duration:5.0 position:@"bottom"];
         }else

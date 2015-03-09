@@ -38,10 +38,10 @@
 {
     if([[NSUserDefaults standardUserDefaults]boolForKey:@"rememberME"])
     {
-        NSDictionary* userDict = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"];
+        NSDictionary* userDict = (NSDictionary*)[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"];
         [self.userNameTextField setText:[userDict objectForKey:@"username"]];
         [self.passwordTextField setText:[userDict objectForKey:@"password"]];
-        [self.rememberMeSwitch setSelected:YES];
+        [self.rememberMeSwitch setOn:YES animated:YES];
     }else
     {
         [self.userNameTextField setText:@""];
@@ -161,17 +161,16 @@
         NSError* error;
         NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
-        if([[responseDict objectForKey:@"result"] objectForKey:@"error"])
+        if([[[responseDict objectForKey:@"result"] objectForKey:@"error"] intValue] != 0)
         {
             [self.view makeToast:[[responseDict objectForKey:@"result"] objectForKey:@"message"] duration:5.0 position:@"bottom"];
         }else
         {
-            
-            NSDictionary* userDict = [[responseDict objectForKey:@"result"] objectForKey:@"user"];
+            NSDictionary* userDict = [[[responseDict objectForKey:@"result"] objectForKey:@"user"]lastObject];
             [[NSUserDefaults standardUserDefaults]setObject:userDict forKey:@"currentUser"];
             [[NSUserDefaults standardUserDefaults]setBool:self.rememberMeSwitch.isOn forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
-            [self performSegueWithIdentifier:@"homeSeg" sender:self];
+            [self performSegueWithIdentifier:@"landPageSeg" sender:self];
         }
     }else if(connection == onlineCountConnection)
     {

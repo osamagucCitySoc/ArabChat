@@ -45,6 +45,12 @@
 		E8A415011AAAAE090022E8CC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A414FF1AAAAE090022E8CC /* LaunchScreen.xib */; };
 		E8A4150D1AAAAE090022E8CC /* ArabChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A4150C1AAAAE090022E8CC /* ArabChatTests.m */; };
 		E8A415B91AAAB1340022E8CC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A415B81AAAB1340022E8CC /* AudioToolbox.framework */; };
+		E8BE12921AAD6E310054FADD /* LandinPageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BE12911AAD6E310054FADD /* LandinPageTableViewController.m */; };
+		E8BE12941AADB0840054FADD /* online-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E8BE12931AADB0840054FADD /* online-icon.png */; };
+		E8BE12961AADB09E0054FADD /* online-red-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E8BE12951AADB09E0054FADD /* online-red-icon.png */; };
+		E8BE129A1AADBCEA0054FADD /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = E8BE12971AADBCEA0054FADD /* loading.png */; };
+		E8BE129B1AADBCEA0054FADD /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BE12991AADBCEA0054FADD /* AsyncImageView.m */; };
+		E8BE129F1AADBD1B0054FADD /* UserGalleryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BE129E1AADBD1B0054FADD /* UserGalleryTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +134,15 @@
 		E8A4150B1AAAAE090022E8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8A4150C1AAAAE090022E8CC /* ArabChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArabChatTests.m; sourceTree = "<group>"; };
 		E8A415B81AAAB1340022E8CC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E8BE12901AAD6E310054FADD /* LandinPageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandinPageTableViewController.h; sourceTree = "<group>"; };
+		E8BE12911AAD6E310054FADD /* LandinPageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandinPageTableViewController.m; sourceTree = "<group>"; };
+		E8BE12931AADB0840054FADD /* online-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online-icon.png"; sourceTree = "<group>"; };
+		E8BE12951AADB09E0054FADD /* online-red-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online-red-icon.png"; sourceTree = "<group>"; };
+		E8BE12971AADBCEA0054FADD /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		E8BE12981AADBCEA0054FADD /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		E8BE12991AADBCEA0054FADD /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		E8BE129D1AADBD1B0054FADD /* UserGalleryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserGalleryTableViewController.h; sourceTree = "<group>"; };
+		E8BE129E1AADBD1B0054FADD /* UserGalleryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserGalleryTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,13 +193,13 @@
 			name = ThirdParty;
 			sourceTree = "<group>";
 		};
-		E80B39591AAC3E7E005E7C01 /* HomeViewController */ = {
+		E80B39591AAC3E7E005E7C01 /* RegisterViewController */ = {
 			isa = PBXGroup;
 			children = (
 				E80B39561AAC3E77005E7C01 /* RegisterViewController.h */,
 				E80B39571AAC3E77005E7C01 /* RegisterViewController.m */,
 			);
-			name = HomeViewController;
+			name = RegisterViewController;
 			sourceTree = "<group>";
 		};
 		E80B39911AAC4486005E7C01 /* CircularCachImage */ = {
@@ -256,7 +271,9 @@
 			children = (
 				E80B39371AAC2073005E7C01 /* ThirdParty */,
 				E80B39301AAC1571005E7C01 /* LoginScreen */,
-				E80B39591AAC3E7E005E7C01 /* HomeViewController */,
+				E80B39591AAC3E7E005E7C01 /* RegisterViewController */,
+				E8BE12891AAD5B790054FADD /* LandingPageController */,
+				E8BE129C1AADBD0E0054FADD /* UserGallery */,
 				E8A414F11AAAAE090022E8CC /* AppDelegate.h */,
 				E8A414F21AAAAE090022E8CC /* AppDelegate.m */,
 				E8A414F71AAAAE090022E8CC /* ViewController.h */,
@@ -273,6 +290,11 @@
 		E8A414ED1AAAAE090022E8CC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E8BE12971AADBCEA0054FADD /* loading.png */,
+				E8BE12981AADBCEA0054FADD /* AsyncImageView.h */,
+				E8BE12991AADBCEA0054FADD /* AsyncImageView.m */,
+				E8BE12931AADB0840054FADD /* online-icon.png */,
+				E8BE12951AADB09E0054FADD /* online-red-icon.png */,
 				E85074201AAC6420007ACEEC /* add_new_user.png */,
 				E85074211AAC6420007ACEEC /* add_new_user@2x.png */,
 				E85074241AAC642F007ACEEC /* add_new_user@3x.png */,
@@ -297,6 +319,24 @@
 				E8A4150B1AAAAE090022E8CC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E8BE12891AAD5B790054FADD /* LandingPageController */ = {
+			isa = PBXGroup;
+			children = (
+				E8BE12901AAD6E310054FADD /* LandinPageTableViewController.h */,
+				E8BE12911AAD6E310054FADD /* LandinPageTableViewController.m */,
+			);
+			name = LandingPageController;
+			sourceTree = "<group>";
+		};
+		E8BE129C1AADBD0E0054FADD /* UserGallery */ = {
+			isa = PBXGroup;
+			children = (
+				E8BE129D1AADBD1B0054FADD /* UserGalleryTableViewController.h */,
+				E8BE129E1AADBD1B0054FADD /* UserGalleryTableViewController.m */,
+			);
+			name = UserGallery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,6 +432,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8BE129A1AADBCEA0054FADD /* loading.png in Resources */,
+				E8BE12941AADB0840054FADD /* online-icon.png in Resources */,
+				E8BE12961AADB09E0054FADD /* online-red-icon.png in Resources */,
 				E8A414FC1AAAAE090022E8CC /* Main.storyboard in Resources */,
 				E85074251AAC642F007ACEEC /* add_new_user@3x.png in Resources */,
 				E8A415011AAAAE090022E8CC /* LaunchScreen.xib in Resources */,
@@ -417,6 +460,7 @@
 			files = (
 				E80B39401AAC2153005E7C01 /* UIView+Toast.m in Sources */,
 				E80B398D1AAC446D005E7C01 /* UIImage+WebP.m in Sources */,
+				E8BE129F1AADBD1B0054FADD /* UserGalleryTableViewController.m in Sources */,
 				E80B39551AAC24E1005E7C01 /* MZLoadingCircle.m in Sources */,
 				E80B393F1AAC2153005E7C01 /* OLGhostAlertView.m in Sources */,
 				E80B395C1AAC4438005E7C01 /* NZCircularImageView.m in Sources */,
@@ -427,6 +471,7 @@
 				E80B39831AAC446D005E7C01 /* SDImageCache.m in Sources */,
 				E80B39581AAC3E77005E7C01 /* RegisterViewController.m in Sources */,
 				E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */,
+				E8BE12921AAD6E310054FADD /* LandinPageTableViewController.m in Sources */,
 				E8A414F91AAAAE090022E8CC /* ViewController.m in Sources */,
 				E80B39841AAC446D005E7C01 /* SDWebImageCompat.m in Sources */,
 				E80B39821AAC446D005E7C01 /* NSData+ImageContentType.m in Sources */,
@@ -444,6 +489,7 @@
 				E80B39851AAC446D005E7C01 /* SDWebImageDecoder.m in Sources */,
 				E80B39901AAC446D005E7C01 /* UIView+WebCacheOperation.m in Sources */,
 				E80B395F1AAC4451005E7C01 /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,
+				E8BE129B1AADBCEA0054FADD /* AsyncImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
