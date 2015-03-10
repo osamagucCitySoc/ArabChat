@@ -29,16 +29,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initUI];
 }
-
 
 
 -(void)initUI
 {
     if([[NSUserDefaults standardUserDefaults]boolForKey:@"rememberME"])
     {
-        NSDictionary* userDict = (NSDictionary*)[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"];
+        NSDictionary* userDict = [(NSDictionary*)[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"] objectForKey:@"0"];
         [self.userNameTextField setText:[userDict objectForKey:@"username"]];
         [self.passwordTextField setText:[userDict objectForKey:@"password"]];
         [self.rememberMeSwitch setOn:YES animated:YES];
@@ -46,7 +44,7 @@
     {
         [self.userNameTextField setText:@""];
         [self.passwordTextField setText:@""];
-        [self.rememberMeSwitch setSelected:NO];
+        [self.rememberMeSwitch setOn:NO animated:YES];
     }
     
     
@@ -166,7 +164,7 @@
             [self.view makeToast:[[responseDict objectForKey:@"result"] objectForKey:@"message"] duration:5.0 position:@"bottom"];
         }else
         {
-            NSDictionary* userDict = [[[responseDict objectForKey:@"result"] objectForKey:@"user"]lastObject];
+            NSDictionary* userDict = [[responseDict objectForKey:@"result"] objectForKey:@"user"];
             [[NSUserDefaults standardUserDefaults]setObject:userDict forKey:@"currentUser"];
             [[NSUserDefaults standardUserDefaults]setBool:self.rememberMeSwitch.isOn forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
@@ -187,6 +185,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self initUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

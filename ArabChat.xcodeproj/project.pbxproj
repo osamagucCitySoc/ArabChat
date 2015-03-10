@@ -51,6 +51,8 @@
 		E8BE129A1AADBCEA0054FADD /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = E8BE12971AADBCEA0054FADD /* loading.png */; };
 		E8BE129B1AADBCEA0054FADD /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BE12991AADBCEA0054FADD /* AsyncImageView.m */; };
 		E8BE129F1AADBD1B0054FADD /* UserGalleryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BE129E1AADBD1B0054FADD /* UserGalleryTableViewController.m */; };
+		E8FC97F21AADE99F005D7B6F /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC97F11AADE99F005D7B6F /* BBBadgeBarButtonItem.m */; };
+		E8FC97F51AAEAC97005D7B6F /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC97F41AAEAC97005D7B6F /* MyProfileViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +145,10 @@
 		E8BE12991AADBCEA0054FADD /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		E8BE129D1AADBD1B0054FADD /* UserGalleryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserGalleryTableViewController.h; sourceTree = "<group>"; };
 		E8BE129E1AADBD1B0054FADD /* UserGalleryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserGalleryTableViewController.m; sourceTree = "<group>"; };
+		E8FC97F01AADE99F005D7B6F /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
+		E8FC97F11AADE99F005D7B6F /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
+		E8FC97F31AAEAC97005D7B6F /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
+		E8FC97F41AAEAC97005D7B6F /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +184,8 @@
 		E80B39371AAC2073005E7C01 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				E8FC97F01AADE99F005D7B6F /* BBBadgeBarButtonItem.h */,
+				E8FC97F11AADE99F005D7B6F /* BBBadgeBarButtonItem.m */,
 				E80B39911AAC4486005E7C01 /* CircularCachImage */,
 				E80B39531AAC24E1005E7C01 /* MZLoadingCircle.h */,
 				E80B39541AAC24E1005E7C01 /* MZLoadingCircle.m */,
@@ -274,6 +282,7 @@
 				E80B39591AAC3E7E005E7C01 /* RegisterViewController */,
 				E8BE12891AAD5B790054FADD /* LandingPageController */,
 				E8BE129C1AADBD0E0054FADD /* UserGallery */,
+				E8FC97F61AAEACA1005D7B6F /* MyProfileViewController */,
 				E8A414F11AAAAE090022E8CC /* AppDelegate.h */,
 				E8A414F21AAAAE090022E8CC /* AppDelegate.m */,
 				E8A414F71AAAAE090022E8CC /* ViewController.h */,
@@ -337,6 +346,15 @@
 				E8BE129E1AADBD1B0054FADD /* UserGalleryTableViewController.m */,
 			);
 			name = UserGallery;
+			sourceTree = "<group>";
+		};
+		E8FC97F61AAEACA1005D7B6F /* MyProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E8FC97F31AAEAC97005D7B6F /* MyProfileViewController.h */,
+				E8FC97F41AAEAC97005D7B6F /* MyProfileViewController.m */,
+			);
+			name = MyProfileViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,7 +492,9 @@
 				E8BE12921AAD6E310054FADD /* LandinPageTableViewController.m in Sources */,
 				E8A414F91AAAAE090022E8CC /* ViewController.m in Sources */,
 				E80B39841AAC446D005E7C01 /* SDWebImageCompat.m in Sources */,
+				E8FC97F51AAEAC97005D7B6F /* MyProfileViewController.m in Sources */,
 				E80B39821AAC446D005E7C01 /* NSData+ImageContentType.m in Sources */,
+				E8FC97F21AADE99F005D7B6F /* BBBadgeBarButtonItem.m in Sources */,
 				E8A414F01AAAAE090022E8CC /* main.m in Sources */,
 				E80B39881AAC446D005E7C01 /* SDWebImageManager.m in Sources */,
 				E80B39861AAC446D005E7C01 /* SDWebImageDownloader.m in Sources */,

@@ -13,7 +13,7 @@
 #import "MZLoadingCircle.h"
 #import "UserGalleryTableViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "BBBadgeBarButtonItem.h"
 
 @interface LandinPageTableViewController ()<NSURLConnectionDataDelegate,NSURLConnectionDelegate,UIActionSheetDelegate>
 
@@ -51,7 +51,7 @@
     [super viewDidLoad];
     
     dataSource = [[NSMutableArray alloc]init];
-    currentUser = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"];
+    currentUser = [[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"] objectForKey:@"0"];
     CGRect frame = [self.upperView frame];
     frame.size.height = 86;
     [self.upperView setFrame:frame];
@@ -74,11 +74,30 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    CGRect frame = [self.upperView frame];
-    frame.size.height = 86;
-    [self.upperView setFrame:frame];
-}
 
+    // If you want your BarButtonItem to handle touch event and click, use a UIButton as customView
+    UIButton *customButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 20)];
+    // Add your action to your button
+    [customButton addTarget:self action:@selector(showChatHistory:) forControlEvents:UIControlEventTouchUpInside];
+    // Customize your button as you want, with an image if you have a pictogram to display for example
+    //[customButton setImage:[UIImage imageNamed:@"online-icon.png"] forState:UIControlStateNormal];
+    
+    [customButton setTitle:@"محادثاتي" forState:UIControlStateNormal];
+    [customButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    
+    BBBadgeBarButtonItem *barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
+    // Set a value for the badge
+    [barButton setShouldAnimateBadge:YES];
+    barButton.badgeValue = @"2";
+    
+    barButton.badgeOriginX = 63;
+    barButton.badgeOriginY = -9;
+    
+    // Add it as the leftBarButtonItem of the navigation bar
+    self.navigationItem.leftBarButtonItem = barButton;
+
+    
+}
 
 -(void)getUsers
 {
@@ -176,7 +195,7 @@
     [(UILabel*)[cell viewWithTag:2] setText:[NSString stringWithFormat:@"%@ : %i",@"العمر",year]];
     [(UILabel*)[cell viewWithTag:3] setText:[NSString stringWithFormat:@"%@ : %@",@"الجنس",gender]];
     [(UILabel*)[cell viewWithTag:4] setText:[NSString stringWithFormat:@"%@ : %@ - %@",@"العنوان",[cellUser objectForKey:@"userCountry"],[cellUser objectForKey:@"userCity"]]];
-    [(UILabel*)[cell viewWithTag:7] setText:[NSString stringWithFormat:@"%@ : %@",@"الوصف",[cellUser objectForKey:@"status"]]];
+    [(UITextView*)[cell viewWithTag:7] setText:[NSString stringWithFormat:@"%@ : %@",@"الوصف",[cellUser objectForKey:@"status"]]];
     [(NZCircularImageView*)[cell viewWithTag:5] setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[cellUser objectForKey:@"profilePic"]]] placeholderImage:[UIImage imageNamed:@"loading.png"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     return cell;
@@ -276,9 +295,42 @@
         {
             [self performSegueWithIdentifier:@"imagesSeg" sender:self];
         }
+    }else if(actionSheet.tag == 2 && actionSheet.cancelButtonIndex != buttonIndex)
+    {
+        if(buttonIndex == 0)
+        {
+            [self performSegueWithIdentifier:@"myProgileSeg" sender:self];
+        }else if(buttonIndex == 1)
+        {
+            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rememberME"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 
 
+#pragma mark action outlet
+- (IBAction)optionsButtonSelected:(id)sender {
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بروفايلي",@"تسجيل خروج", nil];
+    [sheet setTag:2];
+    
+    [sheet showInView:self.view];
+}
+
+- (void)showChatHistory:(UIButton *)sender
+{
+    NSLog(@"Bar Button Item Pressed");
+    
+    // Pretend user checked its list, remove badge
+    BBBadgeBarButtonItem *barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
+    barButton.badgeValue = @"3";
+    
+    // If you don't want to remove the badge when it's zero just set
+    barButton.shouldHideBadgeAtZero = NO;
+    // Next time zero should still be displayed
+    
+    // You can customize the badge further (color, font, background), check BBBadgeBarButtonItem.h ;)
+}
 
 @end
