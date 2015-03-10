@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import "UIView+Toast.h"
 #import "NZCircularImageView.h"
+#import "UserGalleryTableViewController.h"
 
 @interface MyProfileViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 
@@ -36,6 +37,17 @@
     UIImagePickerController *imagePicker;
     NSDictionary* currentUser;
     NSMutableArray* photos;
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier]isEqualToString:@"myPicsSeg"])
+    {
+        UserGalleryTableViewController* dst = (UserGalleryTableViewController*)[segue destinationViewController];
+        [dst setUserID:[currentUser objectForKey:@"userID"]];
+        [dst setUserName:[currentUser objectForKey:@"username"]];
+    }
 }
 
 - (void)viewDidLoad {
@@ -121,6 +133,9 @@
             [self.boySwitch setOn:NO animated:YES];
         }
     }
+}
+- (IBAction)myPicsClicked:(id)sender {
+    [self performSegueWithIdentifier:@"myPicsSeg" sender:self];
 }
 
 - (IBAction)registerButtonClicked:(id)sender {

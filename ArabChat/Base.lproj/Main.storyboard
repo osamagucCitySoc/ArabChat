@@ -923,8 +923,14 @@
                     <navigationItem key="navigationItem" id="Wdi-fG-sgl">
                         <barButtonItem key="rightBarButtonItem" title="مراسلة!" id="RGQ-2P-kS6">
                             <color key="tintColor" red="1" green="0.03014565537" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="rightBarButtonClicked:" destination="UnX-Ps-z0h" id="QY8-ai-neG"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="rightBarButton" destination="RGQ-2P-kS6" id="HJD-h7-fAn"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ukT-Yh-oxJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2134,6 +2140,9 @@
                     <navigationItem key="navigationItem" title="بروفايلي.." id="UEv-i1-JOF">
                         <barButtonItem key="rightBarButtonItem" title="صوري" id="V9k-oO-Fgv">
                             <color key="tintColor" red="1" green="0.03014565537" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="myPicsClicked:" destination="UX5-Gi-nyp" id="JSf-wd-jCs"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -2145,6 +2154,7 @@
                         <outlet property="registerButton" destination="gfd-Km-hJt" id="0cf-Uf-fH1"/>
                         <outlet property="scrollView" destination="8fh-af-T3m" id="9mZ-tt-FSF"/>
                         <outlet property="statusMessageTextField" destination="tq9-Nk-DnL" id="Q7l-7e-Iin"/>
+                        <segue destination="UnX-Ps-z0h" kind="push" identifier="myPicsSeg" id="k9A-Pa-7fY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C6S-Zb-28M" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2152,4 +2162,7 @@
             <point key="canvasLocation" x="2860.5" y="-537"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="k9A-Pa-7fY"/>
+    </inferredMetricsTieBreakers>
 </document>
