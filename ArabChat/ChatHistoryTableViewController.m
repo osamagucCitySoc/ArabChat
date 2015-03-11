@@ -33,6 +33,9 @@
     currentUser = [[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"]objectForKey:@"0"];
     
     dataSource = [[NSMutableArray alloc]init];
+    
+    dbController = [[DatabaseController alloc]init];
+    
     [dbController createDatabaseIfNotExists];
     
     dataSource = [dbController loadTopLevelThreads];
@@ -185,7 +188,7 @@
     
     [(UILabel*)[cell viewWithTag:1] setText:[cellUser objectForKey:@"FRDNAME"]];
     [(UILabel*)[cell viewWithTag:2] setText:[cellUser objectForKey:@"MSG"]];
-    [(UILabel*)[cell viewWithTag:3] setText:[cellUser objectForKey:@"WHENN"]];
+    //[(UILabel*)[cell viewWithTag:3] setText:[cellUser objectForKey:@"WHENN"]];
     
     if([[cellUser objectForKey:@"ONLINE"] intValue] == 1)
     {

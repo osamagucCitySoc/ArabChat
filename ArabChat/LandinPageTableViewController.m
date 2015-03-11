@@ -53,14 +53,17 @@
     }
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    barButton.badgeValue = @"0";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     
-    SystemSoundID completeSound;
-    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"water" withExtension:@"aiff"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
-    AudioServicesPlaySystemSound (completeSound);
+    dbController = [[DatabaseController alloc]init];
     
     [dbController createDatabaseIfNotExists];
     
@@ -82,13 +85,6 @@
                   forControlEvents:UIControlEventValueChanged];
 
     
-    [self getUsers];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
     // If you want your BarButtonItem to handle touch event and click, use a UIButton as customView
     UIButton *customButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 20)];
     // Add your action to your button
@@ -108,8 +104,19 @@
     barButton.badgeOriginX = 63;
     barButton.badgeOriginY = -9;
     
+    
+    [self getUsers];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    
+    
     // Add it as the leftBarButtonItem of the navigation bar
     self.navigationItem.leftBarButtonItem = barButton;
+    
 
     
 }
@@ -188,6 +195,13 @@
                 [dbController insertNewChatRecord:[dict objectForKey:@"FRDID"] FRDNAME:[dict objectForKey:@"FRDNAME"] FRDIMG:[dict objectForKey:@"FRDIMG"] MSG:[dict objectForKey:@"MSG"] SENT:0 STATUS:[dict objectForKey:@"STATUS"] WHENN:[[dict objectForKey:@"WHENN"] doubleValue]ONLINE:[[dict objectForKey:@"ONLINE"] intValue]];
             }
             
+            if(messages.count>0)
+            {
+                SystemSoundID completeSound;
+                NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"water" withExtension:@"aiff"];
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
+                AudioServicesPlaySystemSound (completeSound);
+            }
             
             [barButton setShouldAnimateBadge:YES];
             [barButton setShouldHideBadgeAtZero:YES];

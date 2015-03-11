@@ -443,7 +443,7 @@
 					};
 					E8A415051AAAAE090022E8CC = {
 						CreatedOnToolsVersion = 6.1;
-						TestTargetID = E8A414E91AAAAE090022E8CC;
+						DevelopmentTeam = 9672ZX333W;
 					};
 				};
 			};
@@ -626,7 +626,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "37f2238e-85ea-4de4-952d-87d7fb80bf7b";
+				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -662,7 +662,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "37f2238e-85ea-4de4-952d-87d7fb80bf7b";
+				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -677,7 +677,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f2238e-85ea-4de4-952d-87d7fb80bf7b";
+				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
 			};
 			name = Debug;
 		};
@@ -690,14 +690,15 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "37f2238e-85ea-4de4-952d-87d7fb80bf7b";
+				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
 			};
 			name = Release;
 		};
 		E8A415141AAAAE090022E8CC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -709,14 +710,14 @@
 				INFOPLIST_FILE = ArabChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArabChat.app/ArabChat";
+				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
 			};
 			name = Debug;
 		};
 		E8A415151AAAAE090022E8CC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -724,7 +725,7 @@
 				INFOPLIST_FILE = ArabChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArabChat.app/ArabChat";
+				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
 			};
 			name = Release;
 		};

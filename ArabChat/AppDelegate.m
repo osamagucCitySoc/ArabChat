@@ -18,15 +18,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
-    
-    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-    if([currSysVer hasPrefix:@"8"])
-    {
-        UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+                                                                                             |UIRemoteNotificationTypeSound
+                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
+        [application registerUserNotificationSettings:settings];
+    } else {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:myTypes];
     }
 
     
@@ -75,13 +74,14 @@
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
+    NSLog(@"%@",@"OSAMA");
     //register to receive notifications
     [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
 {
-    
+    NSLog(@"%@",@"OSAMA");
 }
 #endif
 
@@ -93,7 +93,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    
+    NSLog(@"%@",@"OSAMA");
 }
 
 #pragma mark - Core Data stack

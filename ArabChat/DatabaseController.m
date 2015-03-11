@@ -135,33 +135,33 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
                 NSString *FRDID = [[NSString alloc]
                                    initWithUTF8String:
                                    (const char *) sqlite3_column_text(
-                                                                      statement, 0)];
+                                                                      statement, 1)];
                 
                 NSString *FRDNAME = [[NSString alloc]
                                      initWithUTF8String:
                                      (const char *) sqlite3_column_text(
-                                                                        statement, 1)];
+                                                                        statement, 2)];
                 
                 NSString *FRDIMG = [[NSString alloc]
                                     initWithUTF8String:
                                     (const char *) sqlite3_column_text(
-                                                                       statement, 2)];
+                                                                       statement, 3)];
                 
                 NSString *MSG = [[NSString alloc]
                                  initWithUTF8String:
                                  (const char *) sqlite3_column_text(
-                                                                    statement, 3)];
+                                                                    statement, 4)];
                 
-                NSNumber* SENT = [NSNumber numberWithInt:sqlite3_column_int(statement, 4)];
+                NSNumber* SENT = [NSNumber numberWithInt:sqlite3_column_int(statement, 5)];
                 
                 NSString *STAUS = [[NSString alloc]
                                    initWithUTF8String:
                                    (const char *) sqlite3_column_text(
-                                                                      statement, 5)];
+                                                                      statement, 6)];
                 
-                NSNumber* WHENN = [NSNumber numberWithInt:sqlite3_column_double(statement, 6)];
+                NSNumber* WHENN = [NSNumber numberWithInt:sqlite3_column_double(statement, 7)];
                 
-                NSNumber* ONLINE = [NSNumber numberWithInt:sqlite3_column_double(statement, 7)];
+                NSNumber* ONLINE = [NSNumber numberWithInt:sqlite3_column_double(statement, 8)];
                 
                 
                 NSDictionary* scoreEntry = [[NSDictionary alloc]initWithObjects:@[FRDID,FRDNAME,FRDIMG,MSG,SENT,STAUS,WHENN,ONLINE] forKeys:@[@"FRDID",@"FRDNAME",@"FRDIMG",@"MSG",@"SENT",@"STATUS",@"WHENN",@"ONLINE"]];
@@ -170,6 +170,10 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
                 
             }
             sqlite3_finalize(statement);
+        }else
+        {
+            NSLog(@"Error %s while preparing statement", sqlite3_errmsg(localScoresDB));
+
         }
         sqlite3_close(localScoresDB);
     }
