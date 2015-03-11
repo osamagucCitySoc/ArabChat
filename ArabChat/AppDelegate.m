@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AGPushNoteView.h"
 
 @interface AppDelegate ()
 
@@ -21,10 +22,17 @@
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
                                                                                              |UIRemoteNotificationTypeSound
-                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
+                                                                                             |UIRemoteNotificationTypeAlert
+                                                                                             | UIUserNotificationTypeAlert
+                                                                                             |UIUserNotificationTypeBadge
+                                                                                             |UIUserNotificationTypeSound) categories:nil];
+        
         [application registerUserNotificationSettings:settings];
+       
     } else {
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound |UIUserNotificationTypeAlert
+        |UIUserNotificationTypeBadge
+        |UIUserNotificationTypeSound;
         [application registerForRemoteNotificationTypes:myTypes];
     }
 
@@ -93,7 +101,13 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"%@",@"OSAMA");
+    if([[userInfo objectForKey:@"aps"]objectForKey:@"i"])
+    {
+        if([[[userInfo objectForKey:@"aps"]objectForKey:@"i"] intValue] == 1)
+        {
+            [AGPushNoteView showWithNotificationMessage:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] photo:[[userInfo objectForKey:@"aps"] objectForKey:@"p"]];
+        }
+    }
 }
 
 #pragma mark - Core Data stack

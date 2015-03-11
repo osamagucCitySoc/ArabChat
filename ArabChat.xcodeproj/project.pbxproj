@@ -57,6 +57,8 @@
 		E8FC97FF1AAF0A1C005D7B6F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FC97FE1AAF0A1C005D7B6F /* libsqlite3.dylib */; };
 		E8FC98021AAF0A3A005D7B6F /* DatabaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC98011AAF0A3A005D7B6F /* DatabaseController.m */; };
 		E8FC98071AB01D40005D7B6F /* water.aiff in Resources */ = {isa = PBXBuildFile; fileRef = E8FC98061AB01D40005D7B6F /* water.aiff */; };
+		E8FC980B1AB0A5F4005D7B6F /* AGPushNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC98091AB0A5F4005D7B6F /* AGPushNoteView.m */; };
+		E8FC980C1AB0A5F4005D7B6F /* AGPushNoteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8FC980A1AB0A5F4005D7B6F /* AGPushNoteView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +161,9 @@
 		E8FC98001AAF0A3A005D7B6F /* DatabaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseController.h; sourceTree = "<group>"; };
 		E8FC98011AAF0A3A005D7B6F /* DatabaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseController.m; sourceTree = "<group>"; };
 		E8FC98061AB01D40005D7B6F /* water.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = water.aiff; sourceTree = "<group>"; };
+		E8FC98081AB0A5F4005D7B6F /* AGPushNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGPushNoteView.h; sourceTree = "<group>"; };
+		E8FC98091AB0A5F4005D7B6F /* AGPushNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGPushNoteView.m; sourceTree = "<group>"; };
+		E8FC980A1AB0A5F4005D7B6F /* AGPushNoteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AGPushNoteView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +200,9 @@
 		E80B39371AAC2073005E7C01 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				E8FC98081AB0A5F4005D7B6F /* AGPushNoteView.h */,
+				E8FC98091AB0A5F4005D7B6F /* AGPushNoteView.m */,
+				E8FC980A1AB0A5F4005D7B6F /* AGPushNoteView.xib */,
 				E8FC97F01AADE99F005D7B6F /* BBBadgeBarButtonItem.h */,
 				E8FC97F11AADE99F005D7B6F /* BBBadgeBarButtonItem.m */,
 				E80B39911AAC4486005E7C01 /* CircularCachImage */,
@@ -487,6 +495,7 @@
 				E8BE129A1AADBCEA0054FADD /* loading.png in Resources */,
 				E8BE12941AADB0840054FADD /* online-icon.png in Resources */,
 				E8BE12961AADB09E0054FADD /* online-red-icon.png in Resources */,
+				E8FC980C1AB0A5F4005D7B6F /* AGPushNoteView.xib in Resources */,
 				E8A414FC1AAAAE090022E8CC /* Main.storyboard in Resources */,
 				E85074251AAC642F007ACEEC /* add_new_user@3x.png in Resources */,
 				E8A415011AAAAE090022E8CC /* LaunchScreen.xib in Resources */,
@@ -525,6 +534,7 @@
 				E80B39581AAC3E77005E7C01 /* RegisterViewController.m in Sources */,
 				E8FC98021AAF0A3A005D7B6F /* DatabaseController.m in Sources */,
 				E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */,
+				E8FC980B1AB0A5F4005D7B6F /* AGPushNoteView.m in Sources */,
 				E8BE12921AAD6E310054FADD /* LandinPageTableViewController.m in Sources */,
 				E8A414F91AAAAE090022E8CC /* ViewController.m in Sources */,
 				E80B39841AAC446D005E7C01 /* SDWebImageCompat.m in Sources */,
