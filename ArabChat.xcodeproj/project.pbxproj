@@ -53,6 +53,9 @@
 		E8BE129F1AADBD1B0054FADD /* UserGalleryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BE129E1AADBD1B0054FADD /* UserGalleryTableViewController.m */; };
 		E8FC97F21AADE99F005D7B6F /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC97F11AADE99F005D7B6F /* BBBadgeBarButtonItem.m */; };
 		E8FC97F51AAEAC97005D7B6F /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC97F41AAEAC97005D7B6F /* MyProfileViewController.m */; };
+		E8FC97FC1AAEF6A8005D7B6F /* ChatHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC97FB1AAEF6A8005D7B6F /* ChatHistoryTableViewController.m */; };
+		E8FC97FF1AAF0A1C005D7B6F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FC97FE1AAF0A1C005D7B6F /* libsqlite3.dylib */; };
+		E8FC98021AAF0A3A005D7B6F /* DatabaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FC98011AAF0A3A005D7B6F /* DatabaseController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +152,11 @@
 		E8FC97F11AADE99F005D7B6F /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		E8FC97F31AAEAC97005D7B6F /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
 		E8FC97F41AAEAC97005D7B6F /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
+		E8FC97FA1AAEF6A8005D7B6F /* ChatHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatHistoryTableViewController.h; sourceTree = "<group>"; };
+		E8FC97FB1AAEF6A8005D7B6F /* ChatHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatHistoryTableViewController.m; sourceTree = "<group>"; };
+		E8FC97FE1AAF0A1C005D7B6F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		E8FC98001AAF0A3A005D7B6F /* DatabaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseController.h; sourceTree = "<group>"; };
+		E8FC98011AAF0A3A005D7B6F /* DatabaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8FC97FF1AAF0A1C005D7B6F /* libsqlite3.dylib in Frameworks */,
 				E80B39421AAC220B005E7C01 /* QuartzCore.framework in Frameworks */,
 				E8A415B91AAAB1340022E8CC /* AudioToolbox.framework in Frameworks */,
 			);
@@ -261,6 +270,7 @@
 				E8A415091AAAAE090022E8CC /* ArabChatTests */,
 				E8A414EB1AAAAE090022E8CC /* Products */,
 				E80B39411AAC220B005E7C01 /* QuartzCore.framework */,
+				E8FC97FE1AAF0A1C005D7B6F /* libsqlite3.dylib */,
 				E8A415B81AAAB1340022E8CC /* AudioToolbox.framework */,
 			);
 			sourceTree = "<group>";
@@ -277,12 +287,14 @@
 		E8A414EC1AAAAE090022E8CC /* ArabChat */ = {
 			isa = PBXGroup;
 			children = (
+				E8FC98031AAF0A3D005D7B6F /* DBController */,
 				E80B39371AAC2073005E7C01 /* ThirdParty */,
 				E80B39301AAC1571005E7C01 /* LoginScreen */,
 				E80B39591AAC3E7E005E7C01 /* RegisterViewController */,
 				E8BE12891AAD5B790054FADD /* LandingPageController */,
 				E8BE129C1AADBD0E0054FADD /* UserGallery */,
 				E8FC97F61AAEACA1005D7B6F /* MyProfileViewController */,
+				E8FC97FD1AAEF6AC005D7B6F /* ChatHistoryTableViewController */,
 				E8A414F11AAAAE090022E8CC /* AppDelegate.h */,
 				E8A414F21AAAAE090022E8CC /* AppDelegate.m */,
 				E8A414F71AAAAE090022E8CC /* ViewController.h */,
@@ -355,6 +367,24 @@
 				E8FC97F41AAEAC97005D7B6F /* MyProfileViewController.m */,
 			);
 			name = MyProfileViewController;
+			sourceTree = "<group>";
+		};
+		E8FC97FD1AAEF6AC005D7B6F /* ChatHistoryTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E8FC97FA1AAEF6A8005D7B6F /* ChatHistoryTableViewController.h */,
+				E8FC97FB1AAEF6A8005D7B6F /* ChatHistoryTableViewController.m */,
+			);
+			name = ChatHistoryTableViewController;
+			sourceTree = "<group>";
+		};
+		E8FC98031AAF0A3D005D7B6F /* DBController */ = {
+			isa = PBXGroup;
+			children = (
+				E8FC98001AAF0A3A005D7B6F /* DatabaseController.h */,
+				E8FC98011AAF0A3A005D7B6F /* DatabaseController.m */,
+			);
+			name = DBController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -488,6 +518,7 @@
 				E8A414F31AAAAE090022E8CC /* AppDelegate.m in Sources */,
 				E80B39831AAC446D005E7C01 /* SDImageCache.m in Sources */,
 				E80B39581AAC3E77005E7C01 /* RegisterViewController.m in Sources */,
+				E8FC98021AAF0A3A005D7B6F /* DatabaseController.m in Sources */,
 				E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */,
 				E8BE12921AAD6E310054FADD /* LandinPageTableViewController.m in Sources */,
 				E8A414F91AAAAE090022E8CC /* ViewController.m in Sources */,
@@ -495,6 +526,7 @@
 				E8FC97F51AAEAC97005D7B6F /* MyProfileViewController.m in Sources */,
 				E80B39821AAC446D005E7C01 /* NSData+ImageContentType.m in Sources */,
 				E8FC97F21AADE99F005D7B6F /* BBBadgeBarButtonItem.m in Sources */,
+				E8FC97FC1AAEF6A8005D7B6F /* ChatHistoryTableViewController.m in Sources */,
 				E8A414F01AAAAE090022E8CC /* main.m in Sources */,
 				E80B39881AAC446D005E7C01 /* SDWebImageManager.m in Sources */,
 				E80B39861AAC446D005E7C01 /* SDWebImageDownloader.m in Sources */,

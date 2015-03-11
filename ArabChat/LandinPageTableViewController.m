@@ -331,6 +331,8 @@
     // Next time zero should still be displayed
     
     // You can customize the badge further (color, font, background), check BBBadgeBarButtonItem.h ;)
+    
+    [self performSegueWithIdentifier:@"chatHistorySeg" sender:self];
 }
 
 @end
