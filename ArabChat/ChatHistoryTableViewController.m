@@ -7,16 +7,147 @@
 //
 
 #import "ChatHistoryTableViewController.h"
-#import "AppDelegate.h"
+#import "DatabaseController.h"
+#import "NZCircularImageView.h"
+#import "Reachability.h"
+#import "UIView+Toast.h"
+#import "MZLoadingCircle.h"
 
 @interface ChatHistoryTableViewController ()
 
 @end
 
 @implementation ChatHistoryTableViewController
+{
+    MZLoadingCircle *loadingCircle;
+    NSMutableArray* dataSource;
+    DatabaseController* dbController;
+    NSDictionary* currentUser;
+    BOOL photosSynced;
+    int running;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    currentUser = [[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"]objectForKey:@"0"];
+    
+    dataSource = [[NSMutableArray alloc]init];
+    [dbController createDatabaseIfNotExists];
+    
+    dataSource = [dbController loadTopLevelThreads];
+    
+    [self.tableView reloadData];
+    [self.tableView setNeedsDisplay];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if([ Reachability isConnected])
+    {
+        [self showLoadingMode];
+        if(!photosSynced)
+        {
+            photosSynced = YES;
+            running = 2;
+            [self syncPhotos];
+            [self syncMessages];
+        }else
+        {
+            running = 1;
+            [self syncMessages];
+        }
+    }else
+    {
+        [self.view makeToast:@"عذراً. يجب أن تكون متصلاً بالإنترنت" duration:5.0 position:@"bottom"];
+    }
+
+}
+
+-(void)syncPhotos
+{
+    
+    NSString *post = [NSString stringWithFormat:@"userIDs=%@",[dbController loadUniqueFriendIDs]];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];
+    
+    NSURL *url = [NSURL URLWithString:@"http://moh2013.com/arabDevs/arabchat/updatePhotos.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:90.0];
+    [request setHTTPMethod:@"POST"];
+    
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    
+    [request setHTTPBody:postData];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            NSError* error;
+            
+            NSArray* photos = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            
+            
+            for(NSDictionary* dict in photos)
+            {
+                [dbController updatePhoto:[dict objectForKey:@"userID"] FRDIMG:[dict objectForKey:@"photo"] FRDONLINE:[[dict objectForKey:@"online"] intValue]];
+            }
+            
+            running--;
+            if(running<=0)
+            {
+                [self hideLoadingMode];
+                [self hideLoadingMode];
+            }
+            
+            
+        });
+    });
+}
+
+-(void)syncMessages
+{
+    NSString *post = [NSString stringWithFormat:@"userID=%@",[currentUser objectForKey:@"userID"]];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];
+    
+    NSURL *url = [NSURL URLWithString:@"http://moh2013.com/arabDevs/arabchat/getNewMessages.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:90.0];
+    [request setHTTPMethod:@"POST"];
+    
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    
+    [request setHTTPBody:postData];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            NSError* error;
+            
+            NSArray* messages = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            
+            
+            for(NSDictionary* dict in messages)
+            {
+                [dbController insertNewChatRecord:[dict objectForKey:@"FRDID"] FRDNAME:[dict objectForKey:@"FRDNAME"] FRDIMG:[dict objectForKey:@"FRDIMG"] MSG:[dict objectForKey:@"MSG"] SENT:0 STATUS:[dict objectForKey:@"STATUS"] WHENN:[[dict objectForKey:@"WHENN"] doubleValue]ONLINE:[[dict objectForKey:@"ONLINE"] intValue]];
+            }
+            
+            dataSource = [dbController loadTopLevelThreads];
+            
+            [self.tableView reloadData];
+            [self.tableView setNeedsDisplay];
+            running--;
+            if(running<=0)
+            {
+                [self hideLoadingMode];
+                [self hideLoadingMode];
+            }
+        });
+    });
 
 }
 
@@ -28,69 +159,81 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [dataSource count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    static NSString* identifier = @"ChatHistoryCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
+    if(!cell)
+    {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    
+    
+    NSDictionary* cellUser = [dataSource objectAtIndex:indexPath.row];
+    
+    
+    [(UILabel*)[cell viewWithTag:1] setText:[cellUser objectForKey:@"FRDNAME"]];
+    [(UILabel*)[cell viewWithTag:2] setText:[cellUser objectForKey:@"MSG"]];
+    [(UILabel*)[cell viewWithTag:3] setText:[cellUser objectForKey:@"WHENN"]];
+    
+    if([[cellUser objectForKey:@"ONLINE"] intValue] == 1)
+    {
+        [(UIImageView*)[cell viewWithTag:5] setImage:[UIImage imageNamed:@"online-icon.png"]];
+    }else
+    {
+        [(UIImageView*)[cell viewWithTag:5] setImage:[UIImage imageNamed:@"online-red-icon.png"]];
+    }
+    
+    
+    [(NZCircularImageView*)[cell viewWithTag:4] setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[cellUser objectForKey:@"FRDIMG"]]] placeholderImage:[UIImage imageNamed:@"loading.png"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+
+#pragma mark-
+#pragma mark-MDProgress HUD
+-(void)showLoadingMode {
+    if (!loadingCircle) {
+        loadingCircle = [[MZLoadingCircle alloc]initWithNibName:nil bundle:nil];
+        loadingCircle.view.backgroundColor = [UIColor clearColor];
+        
+        //Colors for layers
+        loadingCircle.colorCustomLayer = [UIColor colorWithRed:1 green:0.4 blue:0 alpha:1];
+        loadingCircle.colorCustomLayer2 = [UIColor colorWithRed:0 green:0.4 blue:1 alpha:0.65];
+        loadingCircle.colorCustomLayer3 = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:0.4];
+        
+        int size = 100;
+        
+        CGRect frame = loadingCircle.view.frame;
+        frame.size.width = size ;
+        frame.size.height = size;
+        frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+        frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
+        loadingCircle.view.frame = frame;
+        loadingCircle.view.layer.zPosition = MAXFLOAT;
+        [self.view addSubview: loadingCircle.view];
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(void)hideLoadingMode {
+    if (loadingCircle) {
+        [loadingCircle.view removeFromSuperview];
+        loadingCircle = nil;
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

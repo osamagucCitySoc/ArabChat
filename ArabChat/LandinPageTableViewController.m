@@ -14,6 +14,8 @@
 #import "UserGalleryTableViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "BBBadgeBarButtonItem.h"
+#import "DatabaseController.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface LandinPageTableViewController ()<NSURLConnectionDataDelegate,NSURLConnectionDelegate,UIActionSheetDelegate>
 
@@ -33,7 +35,11 @@
     NSMutableArray* dataSource;
     NSURLConnection* getUsersConnection;
     NSString* lastRequestConditions;
+    DatabaseController* dbController;
     NSDictionary* currentUser;
+    BBBadgeBarButtonItem *barButton;
+    SystemSoundID mySound;
+    int running;
 }
 
 
@@ -49,6 +55,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    SystemSoundID completeSound;
+    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"water" withExtension:@"aiff"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
+    AudioServicesPlaySystemSound (completeSound);
+    
+    [dbController createDatabaseIfNotExists];
     
     dataSource = [[NSMutableArray alloc]init];
     currentUser = [[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"] objectForKey:@"0"];
@@ -85,10 +99,11 @@
     [customButton setTitle:@"محادثاتي" forState:UIControlStateNormal];
     [customButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
-    BBBadgeBarButtonItem *barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
+    barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
     // Set a value for the badge
     [barButton setShouldAnimateBadge:YES];
-    barButton.badgeValue = @"2";
+    [barButton setShouldHideBadgeAtZero:YES];
+    barButton.badgeValue = @"0";
     
     barButton.badgeOriginX = 63;
     barButton.badgeOriginY = -9;
@@ -101,11 +116,14 @@
 
 -(void)getUsers
 {
+    running = 2;
     [self.refreshControl endRefreshing];
 
     if([ Reachability isConnected])
     {
         [self showLoadingMode];
+        
+        [self syncMessages];
         
         responseData = [[NSMutableData alloc]init];
         
@@ -138,6 +156,53 @@
     {
         [self.view makeToast:@"عذراً. يجب أن تكون متصلاً بالإنترنت" duration:5.0 position:@"bottom"];
     }
+}
+
+
+-(void)syncMessages
+{
+    NSString *post = [NSString stringWithFormat:@"userID=%@",[currentUser objectForKey:@"userID"]];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];
+    
+    NSURL *url = [NSURL URLWithString:@"http://moh2013.com/arabDevs/arabchat/getNewMessages.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:90.0];
+    [request setHTTPMethod:@"POST"];
+    
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    
+    [request setHTTPBody:postData];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            NSError* error;
+            
+            NSArray* messages = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            
+            
+            for(NSDictionary* dict in messages)
+            {
+                [dbController insertNewChatRecord:[dict objectForKey:@"FRDID"] FRDNAME:[dict objectForKey:@"FRDNAME"] FRDIMG:[dict objectForKey:@"FRDIMG"] MSG:[dict objectForKey:@"MSG"] SENT:0 STATUS:[dict objectForKey:@"STATUS"] WHENN:[[dict objectForKey:@"WHENN"] doubleValue]ONLINE:[[dict objectForKey:@"ONLINE"] intValue]];
+            }
+            
+            
+            [barButton setShouldAnimateBadge:YES];
+            [barButton setShouldHideBadgeAtZero:YES];
+            barButton.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)messages.count];
+            
+            running--;
+            if(running <= 0)
+            {
+                [self hideLoadingMode];
+                [self hideLoadingMode];
+            }
+            
+        });
+    });
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -261,7 +326,11 @@
 {
     if(connection == getUsersConnection)
     {
-        [self hideLoadingMode];
+        running--;
+        if(running<=0)
+        {
+            [self hideLoadingMode];
+        }
 
         NSError* error;
         dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&error]];
@@ -320,18 +389,6 @@
 
 - (void)showChatHistory:(UIButton *)sender
 {
-    NSLog(@"Bar Button Item Pressed");
-    
-    // Pretend user checked its list, remove badge
-    BBBadgeBarButtonItem *barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
-    barButton.badgeValue = @"3";
-    
-    // If you don't want to remove the badge when it's zero just set
-    barButton.shouldHideBadgeAtZero = NO;
-    // Next time zero should still be displayed
-    
-    // You can customize the badge further (color, font, background), check BBBadgeBarButtonItem.h ;)
-    
     [self performSegueWithIdentifier:@"chatHistorySeg" sender:self];
 }
 

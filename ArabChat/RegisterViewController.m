@@ -147,7 +147,7 @@
         
         
         
-        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&status=%@&gender=%i&birthday=%f&country=%@&city=%@",self.usernameTextField.text,self.passwordTwoTextField.text,self.statusMessageTextField.text,gender,[[self.datePicker date] timeIntervalSince1970],[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]],[[countriesCitiesDataSource objectForKey:[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]]] objectAtIndex:[self.countryCityPickerView selectedRowInComponent:1]]];
+        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&status=%@&gender=%i&birthday=%f&country=%@&city=%@&deviceToken=%@",self.usernameTextField.text,self.passwordTwoTextField.text,self.statusMessageTextField.text,gender,[[self.datePicker date] timeIntervalSince1970],[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]],[[countriesCitiesDataSource objectForKey:[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]]] objectAtIndex:[self.countryCityPickerView selectedRowInComponent:1]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
         
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];

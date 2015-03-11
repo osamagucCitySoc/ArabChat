@@ -167,7 +167,7 @@
         
         
         
-        NSString *post = [NSString stringWithFormat:@"userID=%@&status=%@&gender=%i&birthday=%f&country=%@&city=%@",[currentUser objectForKey:@"userID"],self.statusMessageTextField.text,gender,[[self.datePicker date] timeIntervalSince1970],[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]],[[countriesCitiesDataSource objectForKey:[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]]] objectAtIndex:[self.countryCityPickerView selectedRowInComponent:1]]];
+        NSString *post = [NSString stringWithFormat:@"userID=%@&status=%@&gender=%i&birthday=%f&country=%@&city=%@&deviceToken=%@",[currentUser objectForKey:@"userID"],self.statusMessageTextField.text,gender,[[self.datePicker date] timeIntervalSince1970],[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]],[[countriesCitiesDataSource objectForKey:[sortedArray objectAtIndex:[self.countryCityPickerView selectedRowInComponent:0]]] objectAtIndex:[self.countryCityPickerView selectedRowInComponent:1]],[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"]];
         
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];

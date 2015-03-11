@@ -28,7 +28,12 @@
 /**
  This method to be called by the controller when he wants to insert new score record locally.
  **/
--(void)insertNewChatRecord:(NSString*)FRDID FRDNAME:(NSString*)FRDNAME FRDIMG:(NSString*)FRDIMG MSG:(NSString*)MSG SENT:(int)SENT STATUS:(NSString*)STATUS WHEN:(double)WHEN;
+-(void)insertNewChatRecord:(NSString*)FRDID FRDNAME:(NSString*)FRDNAME FRDIMG:(NSString*)FRDIMG MSG:(NSString*)MSG SENT:(int)SENT STATUS:(NSString*)STATUS WHENN:(double)WHENN ONLINE:(int)ONLINE;
 
+
+
+-(NSString*)loadUniqueFriendIDs;
+
+-(void)updatePhoto:(NSString*)FRDI FRDIMG:(NSString*)FRDIMG FRDONLINE:(int)FRDONLINE;
 
 @end

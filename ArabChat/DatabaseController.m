@@ -38,7 +38,7 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
             char *errMsg;
             // creating the all jobs table
             const char *sql_stmt =
-            "CREATE TABLE IF NOT EXISTS ChatTable (ID INTEGER PRIMARY KEY , FRDID TEXT, FRDNAME TEXT, FRDIMG TEXT, MSG TEXT, SENT INTEGER, STATUS TEXT, WHEN DOUBLE)";
+            "CREATE TABLE IF NOT EXISTS ChatTable (ID INTEGER PRIMARY KEY , FRDID TEXT, FRDNAME TEXT, FRDIMG TEXT, MSG TEXT, SENT INTEGER, STATUS TEXT, WHENN DOUBLE, ONLINE INTEGER)";
             
             if (sqlite3_exec(localScoresDB, sql_stmt, NULL, NULL, &errMsg) == SQLITE_OK)
             {
@@ -73,7 +73,7 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
 /**
  This method to be called by the controller when he wants to insert new score record locally.
  **/
--(void)insertNewChatRecord:(NSString*)FRDID FRDNAME:(NSString*)FRDNAME FRDIMG:(NSString*)FRDIMG MSG:(NSString*)MSG SENT:(int)SENT STATUS:(NSString*)STATUS WHEN:(double)WHEN
+-(void)insertNewChatRecord:(NSString*)FRDID FRDNAME:(NSString*)FRDNAME FRDIMG:(NSString*)FRDIMG MSG:(NSString*)MSG SENT:(int)SENT STATUS:(NSString*)STATUS WHENN:(double)WHENN ONLINE:(int)ONLINE
 {
     databasePath = [self configureDatabasePath];
     sqlite3_stmt    *statement;
@@ -82,14 +82,15 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
     if (sqlite3_open(dbpath, &localScoresDB) == SQLITE_OK)
     {
         NSString *insertSQL = [NSString stringWithFormat:
-                               @"INSERT INTO ChatTable (FRDID, FRDNAME, FRDIMG, MSG, SENT, STATUS, WHEN) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%i\", \"%@\", \"%f\")",
+                               @"INSERT INTO ChatTable (FRDID, FRDNAME, FRDIMG, MSG, SENT, STATUS, WHENN, ONLINE) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%i\", \"%@\", \"%f\", \"%i\")",
                                FRDID,
                                FRDNAME,
                                FRDIMG,
                                MSG,
                                SENT,
                                STATUS,
-                               WHEN];
+                               WHENN,
+                               ONLINE];
         
         const char *insert_stmt = [insertSQL UTF8String];
         const char *errMsg;
@@ -121,7 +122,7 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
     
     if (sqlite3_open(dbpath, &localScoresDB) == SQLITE_OK)
     {
-        NSString *querySQL =  @"SELECT * FROM ChatTable WHERE ChatTable.WHEN IN (SELECT MAX(WHEN) FROM ChatTable GROUP BY FRDID) ORDER BY ChatTable.WHEN DESC";
+        NSString *querySQL =  @"SELECT * FROM ChatTable WHERE ChatTable.WHENN IN (SELECT MAX(WHENN) FROM ChatTable GROUP BY FRDID) ORDER BY ChatTable.WHENN DESC";
         
         const char *query_stmt = [querySQL UTF8String];
         
@@ -130,38 +131,40 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-
+                
                 NSString *FRDID = [[NSString alloc]
-                                  initWithUTF8String:
-                                  (const char *) sqlite3_column_text(
-                                                                     statement, 0)];
+                                   initWithUTF8String:
+                                   (const char *) sqlite3_column_text(
+                                                                      statement, 0)];
                 
                 NSString *FRDNAME = [[NSString alloc]
-                                   initWithUTF8String:
-                                   (const char *) sqlite3_column_text(
-                                                                      statement, 1)];
+                                     initWithUTF8String:
+                                     (const char *) sqlite3_column_text(
+                                                                        statement, 1)];
                 
                 NSString *FRDIMG = [[NSString alloc]
-                                   initWithUTF8String:
-                                   (const char *) sqlite3_column_text(
-                                                                      statement, 2)];
+                                    initWithUTF8String:
+                                    (const char *) sqlite3_column_text(
+                                                                       statement, 2)];
                 
                 NSString *MSG = [[NSString alloc]
-                                   initWithUTF8String:
-                                   (const char *) sqlite3_column_text(
-                                                                      statement, 3)];
-                
-               NSNumber* SENT = [NSNumber numberWithInt:sqlite3_column_int(statement, 4)];
-                
-                NSString *STAUS = [[NSString alloc]
                                  initWithUTF8String:
                                  (const char *) sqlite3_column_text(
-                                                                    statement, 5)];
+                                                                    statement, 3)];
                 
-                NSNumber* WHEN = [NSNumber numberWithInt:sqlite3_column_double(statement, 6)];
+                NSNumber* SENT = [NSNumber numberWithInt:sqlite3_column_int(statement, 4)];
+                
+                NSString *STAUS = [[NSString alloc]
+                                   initWithUTF8String:
+                                   (const char *) sqlite3_column_text(
+                                                                      statement, 5)];
+                
+                NSNumber* WHENN = [NSNumber numberWithInt:sqlite3_column_double(statement, 6)];
+                
+                NSNumber* ONLINE = [NSNumber numberWithInt:sqlite3_column_double(statement, 7)];
                 
                 
-                NSDictionary* scoreEntry = [[NSDictionary alloc]initWithObjects:@[FRDID,FRDNAME,FRDIMG,MSG,SENT,STAUS,WHEN] forKeys:@[@"FRDID",@"FRDNAME",@"FRDIMG",@"MSG",@"SENT",@"STATUS",@"WHEN"]];
+                NSDictionary* scoreEntry = [[NSDictionary alloc]initWithObjects:@[FRDID,FRDNAME,FRDIMG,MSG,SENT,STAUS,WHENN,ONLINE] forKeys:@[@"FRDID",@"FRDNAME",@"FRDIMG",@"MSG",@"SENT",@"STATUS",@"WHENN",@"ONLINE"]];
                 
                 [topTenScores addObject:scoreEntry];
                 
@@ -171,5 +174,70 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
         sqlite3_close(localScoresDB);
     }
     return topTenScores;
+}
+
+-(void)updatePhoto:(NSString*)FRDI FRDIMG:(NSString*)FRDIMG FRDONLINE:(int)FRDONLINE
+{
+    databasePath = [self configureDatabasePath];
+    
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt    *statement;
+    
+    if (sqlite3_open(dbpath, &localScoresDB) == SQLITE_OK)
+    {
+        NSString *updateSQL = [NSString stringWithFormat:
+                               @"UPDATE ChatTable SET FRDIMG=%@, FRDONLINE = %i WHERE FRDID=%@",
+                               FRDIMG,FRDONLINE,FRDI];
+        
+        const char *update_stmt = [updateSQL UTF8String];
+        const char *errMsg;
+        sqlite3_prepare_v2(localScoresDB, update_stmt,
+                           -1, &statement, &errMsg);
+        if (sqlite3_step(statement) == SQLITE_DONE)
+        {
+            NSLog(@"%@ : %i",@"Updated",[FRDI intValue]);
+        } else {
+            NSLog(@"%@ : %i",@"Failed To Update",[FRDI intValue]);
+        }
+        sqlite3_finalize(statement);
+
+        sqlite3_close(localScoresDB);
+    }
+}
+
+-(NSString*)loadUniqueFriendIDs
+{
+    databasePath = [self configureDatabasePath];
+    
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt    *statement;
+    
+    NSMutableArray* topTenScores = [[NSMutableArray alloc]init];
+    
+    if (sqlite3_open(dbpath, &localScoresDB) == SQLITE_OK)
+    {
+        NSString *querySQL =  @"SELECT UNIQUE(FRDID) FROM ChatTable";
+        
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(localScoresDB,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                
+                NSString *FRDID = [[NSString alloc]
+                                   initWithUTF8String:
+                                   (const char *) sqlite3_column_text(
+                                                                      statement, 0)];
+                
+                [topTenScores addObject:FRDID];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(localScoresDB);
+    }
+    
+    return [topTenScores componentsJoinedByString:@","];
 }
 @end
