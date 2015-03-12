@@ -8,12 +8,17 @@
 
 #import "AppDelegate.h"
 #import "AGPushNoteView.h"
+#import "DatabaseController.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
+{
+    DatabaseController* dbController;
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -105,7 +110,61 @@
     {
         if([[[userInfo objectForKey:@"aps"]objectForKey:@"i"] intValue] == 1)
         {
-            [AGPushNoteView showWithNotificationMessage:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] photo:[[userInfo objectForKey:@"aps"] objectForKey:@"p"]];
+            dbController = [[DatabaseController alloc]init];
+            
+            [dbController createDatabaseIfNotExists];
+            
+            NSString *post = [NSString stringWithFormat:@"userID=%@",[[[[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"] objectForKey:@"0"] objectForKey:@"userID"]];
+            
+            NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+            NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[post length]];
+            
+            NSURL *url = [NSURL URLWithString:@"http://moh2013.com/arabDevs/arabchat/getNewMessages.php"];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:90.0];
+            [request setHTTPMethod:@"POST"];
+            
+            [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+            
+            [request setHTTPBody:postData];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    
+                    NSError* error;
+                    
+                    NSArray* messages = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    
+                    
+                    for(NSDictionary* dict in messages)
+                    {
+                        [dbController insertNewChatRecord:[dict objectForKey:@"FRDID"] FRDNAME:[dict objectForKey:@"FRDNAME"] FRDIMG:[dict objectForKey:@"FRDIMG"] MSG:[dict objectForKey:@"MSG"] SENT:0 STATUS:[dict objectForKey:@"STATUS"] WHENN:[[dict objectForKey:@"WHENN"] doubleValue]ONLINE:[[dict objectForKey:@"ONLINE"] intValue]];
+                    }
+                    
+                    
+                    SystemSoundID completeSound;
+                    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"water" withExtension:@"aiff"];
+                    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
+                    AudioServicesPlaySystemSound (completeSound);
+                    
+                    
+                    [AGPushNoteView showWithNotificationMessage:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] photo:[[userInfo objectForKey:@"aps"] objectForKey:@"p"]];
+                    
+                    if([[NSUserDefaults standardUserDefaults] objectForKey:@"newMessages"])
+                    {
+                        [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%i",[[[NSUserDefaults standardUserDefaults] objectForKey:@"newMessages"]intValue] + (int)messages.count] forKey:@"newMessages"];
+                        [[NSUserDefaults standardUserDefaults]synchronize];
+                    }else
+                    {
+                        [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%i",(int)messages.count] forKey:@"newMessages"];
+                        [[NSUserDefaults standardUserDefaults]synchronize];
+                    }
+
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"newMessage" object:nil];
+
+                });
+            });
         }
     }
 }

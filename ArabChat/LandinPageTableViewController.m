@@ -59,6 +59,29 @@
     barButton.badgeValue = @"0";
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveMessageNotification:)
+                                                 name:@"newMessage"
+                                               object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) receiveMessageNotification:(NSNotification *) notification
+{
+    barButton.badgeValue = [[NSUserDefaults standardUserDefaults]objectForKey:@"newMessages"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"newMessages"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -202,10 +225,21 @@
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
                 AudioServicesPlaySystemSound (completeSound);
             }
-            
             [barButton setShouldAnimateBadge:YES];
             [barButton setShouldHideBadgeAtZero:YES];
-            barButton.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)messages.count];
+            
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"newMessages"])
+            {
+                barButton.badgeValue = [NSString stringWithFormat:@"%i",[[[NSUserDefaults standardUserDefaults] objectForKey:@"newMessages"]intValue] + (int)messages.count];
+            }else
+            {
+                barButton.badgeValue = [NSString stringWithFormat:@"%i",(int)messages.count];
+            }
+
+            
+            [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"newMessages"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
             
             running--;
             if(running <= 0)
