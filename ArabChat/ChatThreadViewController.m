@@ -60,7 +60,10 @@
         [tableView reloadData];
         [tableView setNeedsDisplay];
     } completion:^(BOOL finished) {
-        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        if(self.messages.count>0)
+        {
+            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }
     }];
 }
 
@@ -158,7 +161,10 @@
         [tableView reloadData];
         [tableView setNeedsDisplay];
     } completion:^(BOOL finished) {
-        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        if(self.messages.count>0)
+        {
+            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }
     }];
     
 }
@@ -193,7 +199,10 @@
     
    tableView.contentInset = contentInsets;
    tableView.scrollIndicatorInsets = contentInsets;
-    [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    if(self.messages.count>0)
+    {
+        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
@@ -353,7 +362,10 @@
                         [tableView reloadData];
                         [tableView setNeedsDisplay];
                     } completion:^(BOOL finished) {
-                        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                        if(self.messages.count>0)
+                        {
+                            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                        }
                     }];
                 });
             });

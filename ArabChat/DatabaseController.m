@@ -197,7 +197,7 @@ static  NSString* MESSAGESTABLE = @"ChatTable";
     
     if (sqlite3_open(dbpath, &localScoresDB) == SQLITE_OK)
     {
-        NSString *querySQL =  [NSString stringWithFormat:@"SELECT * FROM ChatTable WHERE FRDID = \"%@\" ORDER BY ChatTable.WHENN DESC",FRDID];
+        NSString *querySQL =  [NSString stringWithFormat:@"SELECT * FROM ChatTable WHERE FRDID = \"%@\"",FRDID];
         
         const char *query_stmt = [querySQL UTF8String];
         
