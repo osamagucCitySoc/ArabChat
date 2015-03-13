@@ -12,6 +12,8 @@
 #import "UIView+Toast.h"
 #import "MZLoadingCircle.h"
 #import "AsyncImageView.h"
+#import "STBubbleTableViewCellDemoViewController.h"
+#import "ChatThreadViewController.h"
 
 @interface UserGalleryTableViewController ()<NSURLConnectionDataDelegate,NSURLConnectionDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 
@@ -224,6 +226,16 @@
         [sheet setTag:1];
     
         [sheet showInView:self.view];
+    }else
+    {
+        UIImage* image = [(NZCircularImageView*)[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:dataSource.count-1 inSection:0]] viewWithTag:1] image];
+        
+        ChatThreadViewController *demoViewController = [ChatThreadViewController new];
+        demoViewController.FRDID = self.userID;
+        demoViewController.FRDIMG = image;
+        demoViewController.FRDNAME = self.userName;
+        demoViewController.FRDPIC = [[dataSource lastObject]objectForKey:@"photo"];
+        [self.navigationController pushViewController:demoViewController animated:YES];
     }
 
 }

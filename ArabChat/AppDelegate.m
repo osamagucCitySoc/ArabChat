@@ -10,6 +10,7 @@
 #import "AGPushNoteView.h"
 #import "DatabaseController.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "ChatThreadViewController.h"
 
 @interface AppDelegate ()
 
@@ -33,14 +34,16 @@
                                                                                              |UIUserNotificationTypeSound) categories:nil];
         
         [application registerUserNotificationSettings:settings];
-       
+        
     } else {
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound |UIUserNotificationTypeAlert
         |UIUserNotificationTypeBadge
         |UIUserNotificationTypeSound;
         [application registerForRemoteNotificationTypes:myTypes];
     }
-
+    
+    
+    
     
     return YES;
 }
@@ -135,20 +138,47 @@
                     
                     NSArray* messages = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                     
+                    UINavigationController* nav = (UINavigationController*)self.window.rootViewController;
                     
                     for(NSDictionary* dict in messages)
                     {
+                        
+                        if([[nav visibleViewController] isKindOfClass:[ChatThreadViewController class]])
+                        {
+                            if([[(ChatThreadViewController*)[nav visibleViewController] FRDID]isEqualToString:[dict objectForKey:@"FRDID"]])
+                            {
+                                SystemSoundID completeSound;
+                                NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"ReceivedMessage" withExtension:@"wav"];
+                                AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
+                                AudioServicesPlaySystemSound (completeSound);
+                            }else
+                            {
+                                [AGPushNoteView showWithNotificationMessage:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] photo:[[userInfo objectForKey:@"aps"] objectForKey:@"p"]];
+                                
+                                SystemSoundID completeSound;
+                                NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"sms-received" withExtension:@"wav"];
+                                AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
+                                AudioServicesPlaySystemSound (completeSound);
+                            }
+                        }else
+                        {
+                            [AGPushNoteView showWithNotificationMessage:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] photo:[[userInfo objectForKey:@"aps"] objectForKey:@"p"]];
+                            
+                            SystemSoundID completeSound;
+                            NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"sms-received" withExtension:@"wav"];
+                            AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
+                            AudioServicesPlaySystemSound (completeSound);
+                        }
+                        
+                        
                         [dbController insertNewChatRecord:[dict objectForKey:@"FRDID"] FRDNAME:[dict objectForKey:@"FRDNAME"] FRDIMG:[dict objectForKey:@"FRDIMG"] MSG:[dict objectForKey:@"MSG"] SENT:0 STATUS:[dict objectForKey:@"STATUS"] WHENN:[[dict objectForKey:@"WHENN"] doubleValue]ONLINE:[[dict objectForKey:@"ONLINE"] intValue]];
                     }
                     
                     
-                    SystemSoundID completeSound;
-                    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:@"water" withExtension:@"aiff"];
-                    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
-                    AudioServicesPlaySystemSound (completeSound);
                     
                     
-                    [AGPushNoteView showWithNotificationMessage:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] photo:[[userInfo objectForKey:@"aps"] objectForKey:@"p"]];
+                    
+                    
                     
                     if([[NSUserDefaults standardUserDefaults] objectForKey:@"newMessages"])
                     {
@@ -159,10 +189,10 @@
                         [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%i",(int)messages.count] forKey:@"newMessages"];
                         [[NSUserDefaults standardUserDefaults]synchronize];
                     }
-
+                    
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"newMessage" object:nil];
-
+                    
                 });
             });
         }

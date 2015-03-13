@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Osama Rabie. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface DatabaseController : NSObject
 {
@@ -25,6 +25,8 @@
  **/
 -(NSMutableArray*)loadTopLevelThreads;
 
+-(NSMutableArray*)loadThread:(NSString*)FRDID image:(UIImage*)image;
+
 /**
  This method to be called by the controller when he wants to insert new score record locally.
  **/
@@ -33,6 +35,8 @@
 
 
 -(NSString*)loadUniqueFriendIDs;
+
+-(NSDictionary*)loadFriendInfo:(NSString*)FRDID;
 
 -(void)updatePhoto:(NSString*)FRDI FRDIMG:(NSString*)FRDIMG FRDONLINE:(int)FRDONLINE;
 

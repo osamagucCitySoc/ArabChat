@@ -168,6 +168,17 @@
             [[NSUserDefaults standardUserDefaults]setObject:userDict forKey:@"currentUser"];
             [[NSUserDefaults standardUserDefaults]setBool:self.rememberMeSwitch.isOn forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
+            
+            dispatch_async(dispatch_get_global_queue(0,0), ^{
+                NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: [NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[[userDict objectForKey:@"0"] objectForKey:@"profilePic"]]]];
+                if ( data == nil )
+                    return;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSUserDefaults standardUserDefaults]setObject:data forKey:@"mypic"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                });
+            });
+            
             [self performSegueWithIdentifier:@"landPageSeg" sender:self];
         }
     }else if(connection == onlineCountConnection)

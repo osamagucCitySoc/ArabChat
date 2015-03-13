@@ -16,6 +16,8 @@
 #import "BBBadgeBarButtonItem.h"
 #import "DatabaseController.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "STBubbleTableViewCellDemoViewController.h"
+#import "ChatThreadViewController.h"
 
 @interface LandinPageTableViewController ()<NSURLConnectionDataDelegate,NSURLConnectionDelegate,UIActionSheetDelegate>
 
@@ -67,7 +69,14 @@
                                              selector:@selector(receiveMessageNotification:)
                                                  name:@"newMessage"
                                                object:nil];
+    if([[NSUserDefaults standardUserDefaults]objectForKey:@"newMessages"])
+    {
+        barButton.badgeValue = [[NSUserDefaults standardUserDefaults]objectForKey:@"newMessages"];
+        [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"newMessages"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -407,7 +416,15 @@
     {
         if(buttonIndex == 0)
         {
+            UIImage* image = [(NZCircularImageView*)[[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow] viewWithTag:5] image];
             
+            ChatThreadViewController *demoViewController = [ChatThreadViewController new];
+            demoViewController.FRDID = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"userID"];
+            demoViewController.FRDIMG = image;
+            demoViewController.FRDNAME = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"username"];
+            demoViewController.FRDPIC = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"profilePic"];
+            [self.navigationController pushViewController:demoViewController animated:YES];
+
         }else if(buttonIndex == 1)
         {
             [self performSegueWithIdentifier:@"imagesSeg" sender:self];

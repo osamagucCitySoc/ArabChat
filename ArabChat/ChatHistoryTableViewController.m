@@ -12,6 +12,8 @@
 #import "Reachability.h"
 #import "UIView+Toast.h"
 #import "MZLoadingCircle.h"
+#import "STBubbleTableViewCellDemoViewController.h"
+#import "ChatThreadViewController.h"
 
 @interface ChatHistoryTableViewController ()
 
@@ -37,16 +39,23 @@
     dbController = [[DatabaseController alloc]init];
     
     [dbController createDatabaseIfNotExists];
-    
-    dataSource = [dbController loadTopLevelThreads];
-    
-    [self.tableView reloadData];
-    [self.tableView setNeedsDisplay];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    dataSource = [dbController loadTopLevelThreads];
+    
+    [self.tableView reloadData];
+    [self.tableView setNeedsDisplay];
+
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveMessageNotification:)
+                                                 name:@"newMessage"
+                                               object:nil];
+
     if([ Reachability isConnected])
     {
         [self showLoadingMode];
@@ -66,6 +75,19 @@
         [self.view makeToast:@"عذراً. يجب أن تكون متصلاً بالإنترنت" duration:5.0 position:@"bottom"];
     }
 
+}
+
+- (void) receiveMessageNotification:(NSNotification *) notification
+{
+    dataSource = [dbController loadTopLevelThreads];
+    [self.tableView reloadData];
+    [self.tableView setNeedsDisplay];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)syncPhotos
@@ -201,8 +223,20 @@
     
     [(NZCircularImageView*)[cell viewWithTag:4] setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[cellUser objectForKey:@"FRDIMG"]]] placeholderImage:[UIImage imageNamed:@"loading.png"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    
     return cell;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIImage* image = [(NZCircularImageView*)[[tableView cellForRowAtIndexPath:indexPath] viewWithTag:4] image];
+    
+    ChatThreadViewController *demoViewController = [ChatThreadViewController new];
+    demoViewController.FRDID = [[dataSource objectAtIndex:indexPath.row] objectForKey:@"FRDID"];
+    demoViewController.FRDIMG = image;
+    demoViewController.FRDNAME =[[dataSource objectAtIndex:indexPath.row] objectForKey:@"FRDNAME"];
+    demoViewController.FRDPIC = [[dataSource objectAtIndex:indexPath.row] objectForKey:@"FRDIMG"];
+    [self.navigationController pushViewController:demoViewController animated:YES];
 }
 
 

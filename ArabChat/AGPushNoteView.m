@@ -13,7 +13,7 @@
 #define isIOS7 (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1)
 #define PUSH_VIEW [AGPushNoteView sharedPushView]
 
-#define CLOSE_PUSH_SEC 5
+#define CLOSE_PUSH_SEC 2
 #define SHOW_ANIM_DUR 0.5
 #define HIDE_ANIM_DUR 0.35
 
@@ -158,7 +158,7 @@ static AGPushNoteView *_sharedPushView;
         }];
         
         //Start timer (Currently not used to make sure user see & read the push...)
-        //        PUSH_VIEW.closeTimer = [NSTimer scheduledTimerWithTimeInterval:CLOSE_PUSH_SEC target:[IAAPushNoteView class] selector:@selector(close) userInfo:nil repeats:NO];
+                PUSH_VIEW.closeTimer = [NSTimer scheduledTimerWithTimeInterval:CLOSE_PUSH_SEC target:[AGPushNoteView class] selector:@selector(close) userInfo:nil repeats:NO];
     }
 }
 

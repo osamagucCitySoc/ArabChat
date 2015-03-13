@@ -396,6 +396,9 @@
 -(void)uploadImage:(NSData*)imageData userID:(NSString*)userID{
     
     [self showLoadingMode];
+    [[NSUserDefaults standardUserDefaults]setObject:imageData forKey:@"mypic"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
     NSString *urlString = @"http://moh2013.com/arabDevs/arabchat/uploadImageForUser.php";
     NSString* username = [NSString stringWithFormat:@"%@",userID];
     
