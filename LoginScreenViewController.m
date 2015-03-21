@@ -15,7 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
+//@property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *onlineUsersLabel;
 
 @end
@@ -39,12 +39,16 @@
         NSDictionary* userDict = [(NSDictionary*)[[NSUserDefaults standardUserDefaults]objectForKey:@"currentUser"] objectForKey:@"0"];
         [self.userNameTextField setText:[userDict objectForKey:@"username"]];
         [self.passwordTextField setText:[userDict objectForKey:@"password"]];
-        [self.rememberMeSwitch setOn:YES animated:YES];
+        //[self.rememberMeSwitch setOn:YES animated:YES];
+        isRemember = YES;
+        [_rememberButton setBackgroundImage:[UIImage imageNamed:@"check-on.png"] forState:UIControlStateNormal];
     }else
     {
         [self.userNameTextField setText:@""];
         [self.passwordTextField setText:@""];
-        [self.rememberMeSwitch setOn:NO animated:YES];
+        //[self.rememberMeSwitch setOn:NO animated:YES];
+        isRemember = NO;
+        [_rememberButton setBackgroundImage:[UIImage imageNamed:@"check-off.png"] forState:UIControlStateNormal];
     }
     
     
@@ -150,6 +154,20 @@
     }
 }
 
+- (IBAction)rememberOnOff:(id)sender {
+    if (isRemember)
+    {
+        isRemember = NO;
+        [_rememberButton setBackgroundImage:[UIImage imageNamed:@"check-off.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        isRemember = YES;
+        [_rememberButton setBackgroundImage:[UIImage imageNamed:@"check-on.png"] forState:UIControlStateNormal];
+    }
+}
+
+
 #pragma mark Connection Delegate
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
@@ -166,7 +184,7 @@
         {
             NSDictionary* userDict = [[responseDict objectForKey:@"result"] objectForKey:@"user"];
             [[NSUserDefaults standardUserDefaults]setObject:userDict forKey:@"currentUser"];
-            [[NSUserDefaults standardUserDefaults]setBool:self.rememberMeSwitch.isOn forKey:@"rememberME"];
+            [[NSUserDefaults standardUserDefaults]setBool:isRemember forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
             
             dispatch_async(dispatch_get_global_queue(0,0), ^{
@@ -197,6 +215,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [self initUI];
+    [_userNameTextField becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -206,22 +225,22 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = -keyboardSize.height;
-        self.view.frame = f;
-    }];
+//    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    
+//    [UIView animateWithDuration:0.3 animations:^{
+//        CGRect f = self.view.frame;
+//        f.origin.y = -keyboardSize.height;
+//        self.view.frame = f;
+//    }];
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = 0.0f;
-        self.view.frame = f;
-    }];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        CGRect f = self.view.frame;
+//        f.origin.y = 0.0f;
+//        self.view.frame = f;
+//    }];
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

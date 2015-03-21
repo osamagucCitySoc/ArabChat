@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BBED25E5-5B08-4028-9C2A-47EA2ED09CB1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ArabChat</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1B0BA88358769AB22DD8C74B4E33BE6E0E3DA39D</key>
+		<string>https://github.com/osamagucCitySoc/ArabChat.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ArabChat.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1B0BA88358769AB22DD8C74B4E33BE6E0E3DA39D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/osamagucCitySoc/ArabChat.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1B0BA88358769AB22DD8C74B4E33BE6E0E3DA39D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1B0BA88358769AB22DD8C74B4E33BE6E0E3DA39D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ArabChat</string>
+		</dict>
+	</array>
+</dict>
+</plist>

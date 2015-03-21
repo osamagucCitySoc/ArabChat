@@ -18,8 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *countryCityPickerView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UISwitch *girlSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *boySwitch;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTwoTextField;
@@ -57,7 +55,7 @@
     
     
     
-    [self.profilePicture setImage:[UIImage imageNamed:@"add_new_user.png"]];
+    [self.profilePicture setImage:[UIImage imageNamed:@"user-pic.png"]];
     
     if([ Reachability isConnected])
     {
@@ -89,30 +87,12 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.registerButton.frame.origin.y+15+self.registerButton.frame.size.height)];
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 911)];
     [self.scrollView setScrollEnabled:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark action outlets
-- (IBAction)selectorChanged:(UISwitch*)sender {
-    if(!self.girlSwitch.isOn && !self.boySwitch.isOn)
-    {
-        [sender setOn:YES animated:YES];
-    }else
-    {
-        if(sender == self.boySwitch)
-        {
-            [self.girlSwitch setOn:NO animated:YES];
-        }else
-        {
-            [self.boySwitch setOn:NO animated:YES];
-        }
-    }
 }
 
 - (IBAction)registerButtonClicked:(id)sender {
@@ -133,7 +113,7 @@
     {
         [self showLoadingMode];
         int gender = 1;
-        if(self.boySwitch.isOn)
+        if(_genderSegment.selectedSegmentIndex == 1)
         {
             gender = 1;
         }else

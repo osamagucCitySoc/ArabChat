@@ -21,11 +21,6 @@
 
 @interface LandinPageTableViewController ()<NSURLConnectionDataDelegate,NSURLConnectionDelegate,UIActionSheetDelegate>
 
-@property (weak, nonatomic) IBOutlet UISwitch *menSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *womenSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *onlineSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *sameCountrySwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *sameCitySwitch;
 @property (weak, nonatomic) IBOutlet UIView *upperView;
 
 @end
@@ -166,7 +161,7 @@
         
         responseData = [[NSMutableData alloc]init];
         
-        NSString *post = [NSString stringWithFormat:@"userID=%@&female=%i&male=%i&sameCountry=%i&sameCity=%i&online=%i&userCountry=%@&userCity=%@",[currentUser objectForKey:@"userID"],self.womenSwitch.isOn,self.menSwitch.isOn,self.sameCountrySwitch.isOn,self.sameCitySwitch.isOn,self.onlineSwitch.isOn,[currentUser objectForKey:@"userCountry"],[currentUser objectForKey:@"userCity"]];
+        NSString *post = [NSString stringWithFormat:@"userID=%@&female=%i&male=%i&sameCountry=%i&sameCity=%i&online=%i&userCountry=%@&userCity=%@",[currentUser objectForKey:@"userID"],[[NSUserDefaults standardUserDefaults] boolForKey:@"womenVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"menVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"countryVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"cityVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"onlineVal"],[currentUser objectForKey:@"userCountry"],[currentUser objectForKey:@"userCity"]];
         if([post isEqualToString:lastRequestConditions])
         {
 
@@ -291,17 +286,28 @@
     
     NSDictionary* cellUser = [dataSource objectAtIndex:indexPath.row];
     
+    [cell viewWithTag:5].clipsToBounds = YES;
     
-
+    [cell viewWithTag:5].layer.cornerRadius = 44;
+    [cell viewWithTag:5].layer.borderWidth = 2;
+    
+    [cell viewWithTag:10].clipsToBounds = YES;
+    
+    [cell viewWithTag:10].layer.cornerRadius = 10;
+    
     if([[cellUser objectForKey:@"online"] intValue] == 1)
     {
         [(UIImageView*)[cell viewWithTag:6] setImage:[UIImage imageNamed:@"online-icon.png"]];
+        [[[cell viewWithTag:5] layer] setBorderColor:[UIColor colorWithRed:72.0/255 green:149.0/255 blue:67.0/255 alpha:1.0].CGColor];
+        [(UILabel*)[cell viewWithTag:10] setBackgroundColor:[UIColor colorWithRed:72.0/255 green:149.0/255 blue:67.0/255 alpha:1.0]];
+        [(UILabel*)[cell viewWithTag:10] setText: @"        أون لاين"];
     }else
     {
         [(UIImageView*)[cell viewWithTag:6] setImage:[UIImage imageNamed:@"online-red-icon.png"]];
+        [[[cell viewWithTag:5] layer] setBorderColor:[UIColor lightGrayColor].CGColor];
+        [(UILabel*)[cell viewWithTag:10] setBackgroundColor:[UIColor lightGrayColor]];
+        [(UILabel*)[cell viewWithTag:10] setText: @"        أوف لاين"];
     }
-    
-
     
     NSDate* currentDate = [NSDate date];
     NSDate* birthDate = [NSDate dateWithTimeIntervalSince1970:[[cellUser objectForKey:@"birthday"] floatValue]];
@@ -309,7 +315,6 @@
     unsigned int unitFlags = NSYearCalendarUnit;
     NSDateComponents *conversionInfo = [calendar components:unitFlags fromDate:birthDate   toDate:currentDate  options:0];
     int year = (int)[conversionInfo year];
-
     
     NSString* gender = ([[cellUser objectForKey:@"gender"] intValue]==1)?@"رجل":@"أنثى";
     
@@ -319,6 +324,11 @@
     [(UILabel*)[cell viewWithTag:4] setText:[NSString stringWithFormat:@"%@ : %@ - %@",@"العنوان",[cellUser objectForKey:@"userCountry"],[cellUser objectForKey:@"userCity"]]];
     [(UITextView*)[cell viewWithTag:7] setText:[NSString stringWithFormat:@"%@ : %@",@"الوصف",[cellUser objectForKey:@"status"]]];
     [(NZCircularImageView*)[cell viewWithTag:5] setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[cellUser objectForKey:@"profilePic"]]] placeholderImage:[UIImage imageNamed:@"loading.png"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    UIImageView *theBack = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"select-img.png"]];
+    theBack.backgroundColor = [UIColor clearColor];
+    theBack.opaque = NO;
+    cell.selectedBackgroundView = theBack;
     
     return cell;
 }
@@ -363,20 +373,6 @@
         loadingCircle = nil;
     }
 }
-- (IBAction)switchValueChanged:(UISwitch*)sender {
-    
-    
-    if(!self.menSwitch.isOn && !self.womenSwitch.isOn)
-    {
-        [sender setOn:YES animated:YES];
-    }else if(sender == self.sameCountrySwitch && !self.sameCountrySwitch.isOn)
-    {
-        [self.sameCitySwitch setOn:NO animated:YES];
-    }
-    
-    [self getUsers];
-}
-
 
 #pragma mark Connection Delegate
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -412,6 +408,7 @@
 #pragma mark action sheet delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
     if(actionSheet.tag == 1 && actionSheet.cancelButtonIndex != buttonIndex)
     {
         if(buttonIndex == 0)
