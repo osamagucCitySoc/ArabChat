@@ -40,6 +40,9 @@
 		1EABF8FC1ABC8BF400794CE3 /* user-pic@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EABF8F91ABC8BF400794CE3 /* user-pic@3x.png */; };
 		1EABF8FF1ABDAEDA00794CE3 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EABF8FE1ABDAEDA00794CE3 /* SearchViewController.m */; };
 		1EABF9011ABDC58C00794CE3 /* select-img.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EABF9001ABDC58C00794CE3 /* select-img.png */; };
+		1EABF9051ABDD78F00794CE3 /* close-back-b.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EABF9021ABDD78F00794CE3 /* close-back-b.png */; };
+		1EABF9061ABDD78F00794CE3 /* close-back-b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EABF9031ABDD78F00794CE3 /* close-back-b@2x.png */; };
+		1EABF9071ABDD78F00794CE3 /* close-back-b@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EABF9041ABDD78F00794CE3 /* close-back-b@3x.png */; };
 		E80B39331AAC1589005E7C01 /* LoginScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39321AAC1589005E7C01 /* LoginScreenViewController.m */; };
 		E80B39361AAC2070005E7C01 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39351AAC2070005E7C01 /* MBProgressHUD.m */; };
 		E80B393A1AAC20F6005E7C01 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E80B39391AAC20F6005E7C01 /* Reachability.m */; };
@@ -171,6 +174,9 @@
 		1EABF8FD1ABDAEDA00794CE3 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		1EABF8FE1ABDAEDA00794CE3 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		1EABF9001ABDC58C00794CE3 /* select-img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-img.png"; sourceTree = "<group>"; };
+		1EABF9021ABDD78F00794CE3 /* close-back-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-back-b.png"; sourceTree = "<group>"; };
+		1EABF9031ABDD78F00794CE3 /* close-back-b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-back-b@2x.png"; sourceTree = "<group>"; };
+		1EABF9041ABDD78F00794CE3 /* close-back-b@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-back-b@3x.png"; sourceTree = "<group>"; };
 		E80B39311AAC1589005E7C01 /* LoginScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginScreenViewController.h; sourceTree = "<group>"; };
 		E80B39321AAC1589005E7C01 /* LoginScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginScreenViewController.m; sourceTree = "<group>"; };
 		E80B39341AAC2070005E7C01 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -326,6 +332,9 @@
 		1EABF8B61AB5E34A00794CE3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1EABF9021ABDD78F00794CE3 /* close-back-b.png */,
+				1EABF9031ABDD78F00794CE3 /* close-back-b@2x.png */,
+				1EABF9041ABDD78F00794CE3 /* close-back-b@3x.png */,
 				1EABF9001ABDC58C00794CE3 /* select-img.png */,
 				1EABF8F71ABC8BF400794CE3 /* user-pic.png */,
 				1EABF8F81ABC8BF400794CE3 /* user-pic@2x.png */,
@@ -718,10 +727,12 @@
 			files = (
 				1EABF8D41AB5E36000794CE3 /* text-back@3x.png in Resources */,
 				E8C9E8761AB190DB00C02BEB /* Bubble-4.png in Resources */,
+				1EABF9071ABDD78F00794CE3 /* close-back-b@3x.png in Resources */,
 				1EABF8C61AB5E36000794CE3 /* background-img.png in Resources */,
 				1EABF8D31AB5E36000794CE3 /* text-back@2x.png in Resources */,
 				1EABF8CF1AB5E36000794CE3 /* log-button.png in Resources */,
 				E8C9E8831AB190DB00C02BEB /* SkyTrix.png in Resources */,
+				1EABF9051ABDD78F00794CE3 /* close-back-b.png in Resources */,
 				E8C9E8731AB190DB00C02BEB /* Bubble-2@2x.png in Resources */,
 				1EABF8F01ABC863E00794CE3 /* about-img@3x.png in Resources */,
 				E8BE129A1AADBCEA0054FADD /* loading.png in Resources */,
@@ -746,6 +757,7 @@
 				1EABF8F61ABC887000794CE3 /* app-icon@3x.png in Resources */,
 				1EABF8CD1AB5E36000794CE3 /* check-on@2x.png in Resources */,
 				E8C9E8701AB190DB00C02BEB /* Bubble-1.png in Resources */,
+				1EABF9061ABDD78F00794CE3 /* close-back-b@2x.png in Resources */,
 				E85074251AAC642F007ACEEC /* add_new_user@3x.png in Resources */,
 				E8C9E86F1AB190DB00C02BEB /* Bubble-0@2x.png in Resources */,
 				E8C9E87E1AB190DB00C02BEB /* Bubble-8.png in Resources */,
@@ -903,8 +915,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Firial Amra (WH86AE2T7S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Firial Amra (WH86AE2T7S)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -924,7 +936,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "5b9a03dc-f24e-42ba-94d5-e4fdadad3ff3";
+				PROVISIONING_PROFILE = "86b0ed05-804b-4303-9917-2450bcd3bc35";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -946,8 +958,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Firial Amra (WH86AE2T7S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Firial Amra (WH86AE2T7S)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -960,7 +972,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "5b9a03dc-f24e-42ba-94d5-e4fdadad3ff3";
+				PROVISIONING_PROFILE = "86b0ed05-804b-4303-9917-2450bcd3bc35";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -970,12 +982,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Firial Amra (WH86AE2T7S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Firial Amra (WH86AE2T7S)";
 				INFOPLIST_FILE = ArabChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5b9a03dc-f24e-42ba-94d5-e4fdadad3ff3";
+				PROVISIONING_PROFILE = "86b0ed05-804b-4303-9917-2450bcd3bc35";
 			};
 			name = Debug;
 		};
@@ -983,20 +996,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Firial Amra (WH86AE2T7S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Firial Amra (WH86AE2T7S)";
 				INFOPLIST_FILE = ArabChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5b9a03dc-f24e-42ba-94d5-e4fdadad3ff3";
+				PROVISIONING_PROFILE = "86b0ed05-804b-4303-9917-2450bcd3bc35";
 			};
 			name = Release;
 		};
 		E8A415141AAAAE090022E8CC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Firial Amra (WH86AE2T7S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Firial Amra (WH86AE2T7S)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1008,14 +1022,15 @@
 				INFOPLIST_FILE = ArabChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
+				PROVISIONING_PROFILE = "86b0ed05-804b-4303-9917-2450bcd3bc35";
 			};
 			name = Debug;
 		};
 		E8A415151AAAAE090022E8CC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Firial Amra (WH86AE2T7S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Firial Amra (WH86AE2T7S)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1023,7 +1038,7 @@
 				INFOPLIST_FILE = ArabChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bf9b379d-db8e-46d4-8c1b-0a1606e89450";
+				PROVISIONING_PROFILE = "86b0ed05-804b-4303-9917-2450bcd3bc35";
 			};
 			name = Release;
 		};

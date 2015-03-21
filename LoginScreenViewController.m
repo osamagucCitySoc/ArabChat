@@ -29,8 +29,144 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [NSTimer scheduledTimerWithTimeInterval: 1.0 target: self selector:@selector(startAds:) userInfo: nil repeats:NO];
 }
 
+-(void)startAds:(NSTimer *)timer
+{
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        NSError *theError;
+        NSDictionary *json;
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://osamalogician.com/arabDevs/DefneAdefak/sendComm.php"]
+                                                               cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                           timeoutInterval:10];
+        
+        [request setHTTPMethod: @"GET"];
+        
+        NSError *requestError;
+        NSURLResponse *urlResponse = nil;
+        
+        
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&requestError];
+        
+        
+        if (responseData)
+        {
+            NSMutableArray* dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization
+                                                                               JSONObjectWithData:responseData
+                                                                               options:kNilOptions
+                                                                               error:&theError]];
+            
+            if (theError || dataSource.count == 0)return;
+            
+            json = [dataSource objectAtIndex:0];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self openAdWithImage:[json objectForKey:@"pic"] link:[json objectForKey:@"link"] version:[json objectForKey:@"version"]];
+                
+            });
+            
+        }
+    });
+}
+
+-(void)openAdWithImage:(NSString *)img link:(NSString*)theLink version:(NSString*)theVersion
+{
+    if ([theVersion integerValue] == 0)return;
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"mesa3edAdsVersion"])
+    {
+        if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"mesa3edAdsVersion"] integerValue] == [theVersion integerValue])return;
+        [[NSUserDefaults standardUserDefaults]setObject:theVersion forKey:@"mesa3edAdsVersion"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:theVersion forKey:@"mesa3edAdsVersion"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    
+    UIView *mainAdView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+    
+    [mainAdView setTag:784];
+    
+    [mainAdView setBackgroundColor:[UIColor colorWithRed:50.0/255 green:50.0/255 blue:50.0/255 alpha:1.0]];
+    
+    [[[self navigationController] view] addSubview:mainAdView];
+    
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]init];
+    
+    [activityView startAnimating];
+    
+    [mainAdView addSubview:activityView];
+    
+    [activityView setCenter:mainAdView.center];
+    
+    NSData * imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:img]];
+    UIImage * image = [UIImage imageWithData:imageData];
+    
+    UIImageView *adImage = [[UIImageView alloc]initWithImage:image];
+    
+    [adImage setContentMode:UIViewContentModeScaleAspectFit];
+    
+    [adImage setFrame:mainAdView.frame];
+    
+    [mainAdView addSubview:adImage];
+    
+    [adImage setCenter:mainAdView.center];
+    
+    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closeButton addTarget:self action:@selector(closeAds:)forControlEvents:UIControlEventTouchUpInside];
+    [mainAdView addSubview:closeButton];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"close-back-b.png"] forState:UIControlStateNormal];
+    closeButton.frame = CGRectMake(10, 25, 23, 23);
+    
+    if ([self isValidUrl:theLink])
+    {
+        UIButton *adsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adsButton addTarget:self action:@selector(openAds:)forControlEvents:UIControlEventTouchUpInside];
+        [mainAdView addSubview:adsButton];
+        [adsButton setFrame:CGRectMake(0, 80, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+        
+        [[NSUserDefaults standardUserDefaults]setObject:theLink forKey:@"mesa3edAdsLink"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        
+        NSLog(@"ValidUrl");
+    }
+    
+    [mainAdView setFrame:CGRectMake( 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    [mainAdView setFrame:CGRectMake( 0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+    [UIView commitAnimations];
+}
+
+- (IBAction)openAds:(id)sender
+{
+    [[[[self navigationController] view] viewWithTag:784]removeFromSuperview];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"mesa3edAdsLink"]]];
+}
+
+- (IBAction)closeAds:(id)sender
+{
+    [UIView animateWithDuration:0.3 delay:0.0 options:0
+                     animations:^{
+                         [[[[self navigationController] view] viewWithTag:784] setFrame:CGRectMake( 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+                     }
+                     completion:^(BOOL finished) {
+                         [[[[self navigationController] view] viewWithTag:784]removeFromSuperview];
+                         
+                     }];
+    [UIView commitAnimations];
+}
+
+- (BOOL)isValidUrl:(NSString *)urlString{
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    return [NSURLConnection canHandleRequest:request];
+}
 
 -(void)initUI
 {

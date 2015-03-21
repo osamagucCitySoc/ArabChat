@@ -114,7 +114,6 @@
         <!--Search View Controller-->
         <scene sceneID="2Vq-bR-QHw">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FlZ-7B-ZLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Io5-U8-GHM" customClass="SearchViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9Ic-KW-Mt0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -270,6 +269,7 @@
                         <outlet property="womenSwitch" destination="Unm-r6-0tk" id="lFL-sT-pBg"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FlZ-7B-ZLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="434" y="-617"/>
         </scene>

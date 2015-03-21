@@ -120,7 +120,6 @@
     //[customButton setImage:[UIImage imageNamed:@"online-icon.png"] forState:UIControlStateNormal];
     
     [customButton setTitle:@"محادثاتي" forState:UIControlStateNormal];
-    [customButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
     barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
     // Set a value for the badge
@@ -392,6 +391,12 @@
         
         [self.tableView reloadData];
         [self.tableView setNeedsDisplay];
+        
+        if (dataSource.count == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"لايوجد نتائج" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"تم", nil];
+            [alert show];
+        }
     }
 }
 
@@ -433,6 +438,10 @@
             [self performSegueWithIdentifier:@"myProgileSeg" sender:self];
         }else if(buttonIndex == 1)
         {
+            [[self navigationController] popViewControllerAnimated:YES];
+        }
+        else if (buttonIndex == 2)
+        {
             [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
             [self.navigationController popViewControllerAnimated:YES];
@@ -443,9 +452,9 @@
 
 #pragma mark action outlet
 - (IBAction)optionsButtonSelected:(id)sender {
-    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بروفايلي",@"تسجيل خروج", nil];
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بروفايلي",@"بحث جديد",@"تسجيل خروج", nil];
     [sheet setTag:2];
-    
+    [sheet setDestructiveButtonIndex:2];
     [sheet showInView:self.view];
 }
 
