@@ -19,10 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *countryCityPickerView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UISwitch *girlSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *boySwitch;
 @property (weak, nonatomic) IBOutlet UITextField *statusMessageTextField;
 @property (weak, nonatomic) IBOutlet NZCircularImageView *profilePicture;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *genderSegment;
 
 @end
 
@@ -75,7 +74,6 @@
     {
         [self showLoadingMode];
         [self.profilePicture setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://moh2013.com/arabDevs/arabchat/images/",[currentUser objectForKey:@"profilePic"]]] placeholderImage:[UIImage imageNamed:@"loading.png"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-
         [self getCountries];
     }else
     {
@@ -109,7 +107,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.registerButton.frame.origin.y+15+self.registerButton.frame.size.height)];
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 773)];
     [self.scrollView setScrollEnabled:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -117,23 +115,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-#pragma mark action outlets
-- (IBAction)selectorChanged:(UISwitch*)sender {
-    if(!self.girlSwitch.isOn && !self.boySwitch.isOn)
-    {
-        [sender setOn:YES animated:YES];
-    }else
-    {
-        if(sender == self.boySwitch)
-        {
-            [self.girlSwitch setOn:NO animated:YES];
-        }else
-        {
-            [self.boySwitch setOn:NO animated:YES];
-        }
-    }
-}
 - (IBAction)myPicsClicked:(id)sender {
     [self performSegueWithIdentifier:@"myPicsSeg" sender:self];
 }
@@ -153,7 +134,7 @@
     {
         [self showLoadingMode];
         int gender = 1;
-        if(self.boySwitch.isOn)
+        if(_genderSegment.selectedSegmentIndex == 1)
         {
             gender = 1;
         }else
@@ -333,12 +314,10 @@
       
         if([[currentUser objectForKey:@"gender"] intValue] == 1)
         {
-            [self.boySwitch setOn:YES animated:YES];
-            [self.girlSwitch setOn:NO animated:YES];
+            [_genderSegment setSelectedSegmentIndex:1];
         }else
         {
-            [self.boySwitch setOn:NO animated:YES];
-            [self.girlSwitch setOn:YES animated:YES];
+            [_genderSegment setSelectedSegmentIndex:0];
         }
         
         NSArray* sortedArray = [[countriesCitiesDataSource allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
