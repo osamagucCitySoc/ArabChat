@@ -423,10 +423,10 @@
             UIImage* image = [(NZCircularImageView*)[[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow] viewWithTag:5] image];
             
             ChatThreadViewController *demoViewController = [ChatThreadViewController new];
-            demoViewController.FRDID = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"userID"];
+            demoViewController.FRDID = [[dataSource objectAtIndex:self->selectedIndex.row] objectForKey:@"userID"];
             demoViewController.FRDIMG = image;
-            demoViewController.FRDNAME = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"username"];
-            demoViewController.FRDPIC = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"profilePic"];
+            demoViewController.FRDNAME = [[dataSource objectAtIndex:self->selectedIndex.row] objectForKey:@"username"];
+            demoViewController.FRDPIC = [[dataSource objectAtIndex:self->selectedIndex.row] objectForKey:@"profilePic"];
             [self.navigationController pushViewController:demoViewController animated:YES];
             
         }else if(buttonIndex == 1)
@@ -446,7 +446,7 @@
         {
             [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"rememberME"];
             [[NSUserDefaults standardUserDefaults]synchronize];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }
 }
