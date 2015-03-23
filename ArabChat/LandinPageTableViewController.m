@@ -37,6 +37,7 @@
     BBBadgeBarButtonItem *barButton;
     SystemSoundID mySound;
     int running;
+    NSIndexPath* selectedIndex;
 }
 
 
@@ -45,8 +46,8 @@
     if([[segue identifier]isEqualToString:@"imagesSeg"])
     {
         UserGalleryTableViewController* dst = (UserGalleryTableViewController*)[segue destinationViewController];
-        [dst setUserID:[[dataSource objectAtIndex:[self.tableView.indexPathForSelectedRow row]] objectForKey:@"userID"]];
-        [dst setUserName:[[dataSource objectAtIndex:[self.tableView.indexPathForSelectedRow row]] objectForKey:@"username"]];
+        [dst setUserID:[[dataSource objectAtIndex:selectedIndex.row] objectForKey:@"userID"]];
+        [dst setUserName:[[dataSource objectAtIndex:selectedIndex.row] objectForKey:@"username"]];
     }
 }
 
@@ -110,7 +111,7 @@
     [self.refreshControl addTarget:self
                             action:@selector(getUsers)
                   forControlEvents:UIControlEventValueChanged];
-
+    
     
     // If you want your BarButtonItem to handle touch event and click, use a UIButton as customView
     UIButton *customButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 20)];
@@ -137,13 +138,13 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    
     
     
     // Add it as the leftBarButtonItem of the navigation bar
     self.navigationItem.leftBarButtonItem = barButton;
     
-
+    
     
 }
 
@@ -151,7 +152,7 @@
 {
     running = 2;
     [self.refreshControl endRefreshing];
-
+    
     if([ Reachability isConnected])
     {
         [self showLoadingMode];
@@ -163,7 +164,7 @@
         NSString *post = [NSString stringWithFormat:@"userID=%@&female=%i&male=%i&sameCountry=%i&sameCity=%i&online=%i&userCountry=%@&userCity=%@",[currentUser objectForKey:@"userID"],[[NSUserDefaults standardUserDefaults] boolForKey:@"womenVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"menVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"countryVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"cityVal"],[[NSUserDefaults standardUserDefaults] boolForKey:@"onlineVal"],[currentUser objectForKey:@"userCountry"],[currentUser objectForKey:@"userCity"]];
         if([post isEqualToString:lastRequestConditions])
         {
-
+            
         }else
         {
             
@@ -182,7 +183,7 @@
         getUsersConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self    startImmediately:NO];
         
         [getUsersConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
-                                         forMode:NSDefaultRunLoopMode];
+                                      forMode:NSDefaultRunLoopMode];
         [getUsersConnection start];
         
     }else
@@ -239,7 +240,7 @@
             {
                 barButton.badgeValue = [NSString stringWithFormat:@"%i",(int)messages.count];
             }
-
+            
             
             [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"newMessages"];
             [[NSUserDefaults standardUserDefaults]synchronize];
@@ -383,7 +384,7 @@
         {
             [self hideLoadingMode];
         }
-
+        
         NSError* error;
         dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&error]];
         
@@ -413,6 +414,7 @@
 #pragma mark action sheet delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    selectedIndex = self.tableView.indexPathForSelectedRow;
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
     if(actionSheet.tag == 1 && actionSheet.cancelButtonIndex != buttonIndex)
     {
@@ -426,7 +428,7 @@
             demoViewController.FRDNAME = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"username"];
             demoViewController.FRDPIC = [[dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row] objectForKey:@"profilePic"];
             [self.navigationController pushViewController:demoViewController animated:YES];
-
+            
         }else if(buttonIndex == 1)
         {
             [self performSegueWithIdentifier:@"imagesSeg" sender:self];
